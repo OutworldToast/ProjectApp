@@ -4,6 +4,7 @@ namespace ProjectApp.WebApi.Models;
 
 public class Gebruiker : IdentityUser<Guid> {
 
+    //Body
     public string? Adres {get; set;}
     public string? Postcode {get; set;}
     public int Telefoonnummer {get; set;}
