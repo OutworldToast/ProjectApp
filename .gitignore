@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# User added
+ProjectApp.WebApi/obj/Debug/net8.0/ProjectApp.WebApi.AssemblyInfoInputs.cache
+ProjectApp.WebApi/obj/Debug/net8.0/ProjectApp.WebApi.GeneratedMSBuildEditorConfig.editorconfig
