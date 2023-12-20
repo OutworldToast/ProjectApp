@@ -1,7 +1,7 @@
 namespace ProjectApp.WebApi.Models;
 
 public class Beperking {
-    public Guid Id {get; set;}
+    public string? Id {get; set;}
 
     //FKs
     public List<Panellid> Panelleden {get; set;} = [];
