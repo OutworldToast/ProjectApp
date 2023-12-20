@@ -10,7 +10,8 @@ public class MockOnderzoekContext : DbContext {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        
+        modelBuilder.Entity<Onderzoek>()
+        .Property(o => o.Id).ValueGeneratedNever();
     }
 
     public DbSet<Onderzoek> Onderzoeken {get;set;}
