@@ -23,7 +23,8 @@ public class OnderzoekController : ControllerBase
     }
 
     [HttpGet(Name = "GetOnderzoek")]
-    public Onderzoek Get(int id)
+    [Route("/{id}")]
+    public Onderzoek GetOnderzoek(int id)
     {
         return _context.Onderzoeken.Single(o => id == o.Id);
     }

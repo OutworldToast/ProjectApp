@@ -29,26 +29,59 @@ public class OnderzoekControllerTest : IDisposable
 
     //Maakt voor elke test een inMemoryDatabase aan
     public OnderzoekControllerTest () {
-        var _contextOptions = new DbContextOptionsBuilder<OnderzoekContext>()
+        
+        var contextOptions = new DbContextOptionsBuilder<OnderzoekContext>()
         .UseInMemoryDatabase("OnderzoekControllerTest")
         .Options;
 
-        var context = new OnderzoekContext(_contextOptions);
+        var context = new OnderzoekContext(contextOptions);
         this._context = context;
 
         _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
 
         _context.Onderzoeken.AddRange(
-            new Onderzoek {}
+            new Onderzoek {
+                Id = 1, 
+                Beloning = 5, 
+                BeperkingId = 1, 
+                Beschrijving = "Onderzoek iets", 
+                HoeveelheidDeelnemers = 1,
+                Onderzoeksdatum = DateTime.Now.Date,
+                SoortOnderzoek = "Iets",
+                Status = "Gaande", 
+                Tijdslimiet = DateTime.Now.AddDays(7).Date, 
+                Titel = "IetsOnderzoek", 
+                TypeBeperking = null
+                }
         );
 
+        _context.SaveChanges();
 
     }
 
     [Fact]
-    public void Test1() {
+    public void GetOnderzoekExistsTest() {
+        //arrange
+        OnderzoekController controller = new(_context);
 
+        //act
+        var result = controller.GetOnderzoek(1).Beloning;
+
+        //assert
+        Assert.Equal(5, result);
+    }
+
+    [Fact]
+    public void GetOnderzoekNotExistsTest() {
+        //arrange
+        OnderzoekController controller = new(_context);
+
+        //act
+        // var result = controller.GetOnderzoek(20).Beloning;
+
+        //assert
+        Assert.Throws<InvalidOperationException>(() => controller.GetOnderzoek(20).Beloning);
     }
 
     //Gooit na elke test het database weg

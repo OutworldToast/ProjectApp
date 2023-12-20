@@ -13,7 +13,7 @@ public class Onderzoek {
     public string? Titel {get;set;}
     public string? Beschrijving {get;set;}
     public DateTime Onderzoeksdatum {get;set;}
-    public DateOnly Tijdslimiet {get;set;}
+    public DateTime Tijdslimiet {get;set;}
     public string? SoortOnderzoek {get;set;}
     public int HoeveelheidDeelnemers {get;set;}
     public int Beloning {get;set;}
