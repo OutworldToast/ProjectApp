@@ -45,9 +45,9 @@ Standaard werkt 1 persoon per branch
 
 PUSH:
 Push alleen features met slagende unit tests
-Fetch + pull altijd voor het pushen
+Pull altijd voor het pushen
 
 COMMIT:
-Beschrijvend maar beknopte Commit, uitgebreide beschrijving
+Beschrijvend maar beknopte Commit
 
 
