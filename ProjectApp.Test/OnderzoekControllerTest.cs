@@ -7,21 +7,27 @@ using System.Diagnostics;
 using ProjectApp.WebApi.Models;
 
 
-//onderzoek heeft attributen:
-//id
-//titel
-//beschrijving
-//onderzoeksdatum
-//tijdslimiet
-//typebeperking
-//soortonderzoek
-// 
 
 public class OnderzoekControllerTest : IDisposable
 {
 
     private OnderzoekContext _context;
 
+    //onderzoek heeft attributen:
+    //id
+    //typebeperking
+    //beperkingid
+    //titel
+    //beschrijving
+    //onderzoeksdatum
+    //tijdslimiet
+    //soortonderzoek
+    //hoeveelheid deelnemers
+    //beloning
+    //status
+
+
+    //Maakt voor elke test een inMemoryDatabase aan
     public OnderzoekControllerTest () {
         var _contextOptions = new DbContextOptionsBuilder<OnderzoekContext>()
         .UseInMemoryDatabase("OnderzoekControllerTest")
@@ -34,17 +40,18 @@ public class OnderzoekControllerTest : IDisposable
         _context.Database.EnsureCreated();
 
         _context.Onderzoeken.AddRange(
-            new Onderzoek()
+            new Onderzoek {}
         );
 
 
     }
 
     [Fact]
-    public void Test1()
-    {
+    public void Test1() {
+
     }
 
+    //Gooit na elke test het database weg
     public void Dispose() {
         GC.SuppressFinalize(this);
         _context.Dispose();

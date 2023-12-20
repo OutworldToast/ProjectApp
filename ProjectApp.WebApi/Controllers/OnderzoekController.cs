@@ -23,8 +23,8 @@ public class OnderzoekController : ControllerBase
     }
 
     [HttpGet(Name = "GetOnderzoek")]
-    public IEnumerable<Onderzoek> Get(Guid id)
+    public Onderzoek Get(Guid id)
     {
-        return _context.Onderzoeken.Where(o => id == o.Id).ToList();
+        return _context.Onderzoeken.Single(o => id == o.Id);
     }
 }
