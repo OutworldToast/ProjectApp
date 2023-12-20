@@ -1,11 +1,13 @@
 namespace ProjectApp.WebApi.Models;
 
 public class Voogd {
-    public string? Id {get; set;}
+
+    //PK
+    public int Id {get; set;}
 
     //FKs
     public Panellid? Panellid {get; set;}
-    public string? PanellidId {get; set;}
+    public int PanellidId {get; set;}
 
     //Body
     public string? Naam {get; set;}

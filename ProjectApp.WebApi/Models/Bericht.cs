@@ -2,7 +2,7 @@ namespace ProjectApp.WebApi.Models;
 
 public class Bericht {
     //PK
-    public string? Id {get; set;}
+    public int Id {get; set;}
 
     //FKs
     public string? Gebruiker1Id {get; set;}

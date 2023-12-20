@@ -2,11 +2,12 @@ namespace ProjectApp.WebApi.Models;
 
 public class Onderzoek {
 
-    public string? Id {get;set;}
+    //PK
+    public int Id {get;set;}
     
     //FKs
     public Beperking? TypeBeperking {get;set;}
-    public string? BeperkingId {get; set;}
+    public int BeperkingId {get; set;}
 
     //Body
     public string? Titel {get;set;}
