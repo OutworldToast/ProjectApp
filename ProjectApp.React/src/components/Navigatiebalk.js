@@ -1,10 +1,11 @@
 import Button from "./Button.js";
 import LinkButton from "./LinkButton.js";
 
-function Toolbar() {
+function Navigatiebalk() {
 
     return (
-        <div >
+        <div class = "navbar">
+
             <Button 
             message = {"->> open profiel"}
             body = {"Profiel"}
@@ -16,7 +17,11 @@ function Toolbar() {
             body={'Chat'}
             />
 
-          
+    
+            <LinkButton
+            link={'/HomePage'}
+            body={'Home'}
+            />
             
             <LinkButton
             link = {'/LoginPage'}
@@ -28,4 +33,4 @@ function Toolbar() {
 
 }
 
-export default Toolbar;
+export default Navigatiebalk;

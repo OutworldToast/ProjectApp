@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage.js';
 import BasePage from './pages/BasePage.js';
 import HomePage from './pages/HomePage.js';
 import './Style.css';
+import ChatPage from "./pages/ChatPage.js";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route exact path="/" element={<BasePage />} />
           <Route exact path="/LoginPage" element={<LoginPage />} />
           <Route exact path="/HomePage" element={<HomePage />} />
+          <Route exact path="/ChatPage" element={<ChatPage />} />
         </Routes>
       </div>
     </Router>

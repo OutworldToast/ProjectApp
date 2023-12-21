@@ -2,7 +2,7 @@ import React from 'react';
 import '../CSS/ChatPageStyle.css';
 
 
-export default function ChatPagina() {
+export default function ChatPage() {
     return ( 
 
   <div class="chat-container">
@@ -24,7 +24,7 @@ export default function ChatPagina() {
       </div>
 
       <div class="chat-input">
-        <input type="text" placeholder="Typ uw bericht..."> </input>
+        {/* <input type="text" placeholder="Typ uw bericht..."> </input> */}
         <button>Verstuur</button>
       </div>
     </div>
