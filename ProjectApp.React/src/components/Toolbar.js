@@ -1,4 +1,5 @@
 import Button from "./Button.js";
+import LinkButton from "./LinkButton.js";
 
 function Toolbar() {
 
@@ -18,6 +19,9 @@ function Toolbar() {
             message = {"->> open onderzoek"}
             body = {"Onderzoeken"}
             />
+            
+            <LinkButton/>
+            
         </div>
     )
 
