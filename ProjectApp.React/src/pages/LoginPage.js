@@ -1,4 +1,4 @@
-import "./Dark.css";
+import "../CSS/Dark.css";
 import {Link} from 'react-router-dom';
 
 export default function LoginPage () {

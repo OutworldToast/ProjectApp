@@ -1,7 +1,7 @@
 import React from "react";
 
 import logo from "../Resources/sia/sta.png";
-import "./Light.css";
+import "../CSS/Light.css";
 
 export default function HomePage() {
     return (
