@@ -5,8 +5,8 @@ public class Bericht {
     public int Id {get; set;}
 
     //FKs
-    public string? Gebruiker1Id {get; set;}
-    public string? Gebruiker2Id {get; set;}
+    public Chat? Chat {get; set;}
+    public int ChatId {get; set;}
 
     //Body
     public string? Inhoud {get; set;}
