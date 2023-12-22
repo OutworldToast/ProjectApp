@@ -59,4 +59,20 @@ body {
     background-color: #005580;
   }
   
- 
+  .navbar {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+  nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #333;
+  }
+  

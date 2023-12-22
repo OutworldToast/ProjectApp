@@ -1,7 +1,7 @@
 import React from "react";
 
 import logo from "../Resources/sia/sta.png";
-import "../CSS/Light.css";
+import "../CSS/Light.css"; //word niet toegepast
 
 export default function HomePage() {
     return (
@@ -14,6 +14,8 @@ export default function HomePage() {
        
         <nav>
             <a href="HomePage">Home</a> |
+            <a href="ChatPage">Chat</a> |
+            <a href="LoginPage">Uitloggen</a> |
             <a href="#Profiel">Profiel</a> |
             <a href="#Over ons">Over ons</a>
         </nav>

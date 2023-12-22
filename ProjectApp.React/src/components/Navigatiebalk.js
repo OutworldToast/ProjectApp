@@ -6,27 +6,13 @@ function Navigatiebalk() {
     return (
         <div class = "navbar">
 
-            <Button 
-            message = {"->> open profiel"}
-            body = {"Profiel"}
-            />
-
-
-            <LinkButton
-            link={'/ChatPage'}
-            body={'Chat'}
-            />
-
-    
-            <LinkButton
-            link={'/HomePage'}
-            body={'Home'}
-            />
-            
-            <LinkButton
-            link = {'/LoginPage'}
-            body = {'Login'}
-            />
+        <nav>
+            <a href="HomePage">Home</a> |
+            <a href="ChatPage">Chat</a> |
+            <a href="LoginPage">Uitloggen</a> |
+            <a href="#Profiel">Profiel</a> |
+            <a href="#Over ons">Over ons</a>
+        </nav>
             
         </div>
     )
