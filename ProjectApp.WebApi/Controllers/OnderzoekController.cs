@@ -23,8 +23,9 @@ public class OnderzoekController : ControllerBase
     }
 
     [HttpGet(Name = "GetOnderzoek")]
-    public IEnumerable<Onderzoek> Get(Guid id)
+    [Route("/{id}")]
+    public Onderzoek GetOnderzoek(int id)
     {
-        return _context.Onderzoeken.Where(o => id == o.Id).ToList();
+        return _context.Onderzoeken.Single(o => id == o.Id);
     }
 }
