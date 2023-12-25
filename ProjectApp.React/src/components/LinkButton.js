@@ -7,6 +7,8 @@ const LinkButton = ({link,body}) => {
             <button>{body}</button>
         </Link>
     );
+
+
 };
 
 export default LinkButton;

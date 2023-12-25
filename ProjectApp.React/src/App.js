@@ -14,6 +14,7 @@ function App() {
           <Route exact path="/" element={<BasePage />} />
           <Route exact path="/LoginPage" element={<LoginPage />} />
           <Route exact path="/HomePage" element={<HomePage />} />
+          {/* <Route exact path="/ChatPage" element={<ChatPage />} /> */}
         </Routes>
       </div>
     </Router>
