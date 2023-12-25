@@ -1,9 +1,10 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import LoginPage from './HTML/LoginPage.js';
-import BasePage from './HTML/BasePage.js';
-import HomePage from './HTML/HomePage.js';
-import './Style.css';
+import LoginPage from './pages/LoginPage.js';
+import BasePage from './pages/BasePage.js';
+import HomePage from './pages/HomePage.js';
+import './CSS/Light.css';
+import './CSS/Dark.css';
 
 function App() {
   return (

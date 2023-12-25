@@ -1,14 +1,31 @@
 body{
-  background-color: #fff;
+  background-color: #ffffff;
   background-image: linear-gradient(35deg, #fff, #fff);
   font-family: Arial, sans-serif;
-  color: #000;
+  color: #ffffff;
 }
 
-.logo {
-  position: absolute;
-  top: 10px; /* Afstand vanaf de bovenkant van het scherm */
-  left: 10px; /* Afstand vanaf de linkerzijde van het scherm */
-  width: 150px; /* Pas de breedte aan zoals nodig */
-  height: auto; /* Behoud de verhoudingen van het originele beeld */
+.App-logo{
+  bottom: 20px;
+  width: 175px;
+  position: relative;
+  left: 30px;
+}
+
+.toolbar-start Button {
+  background-color: none;
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 20px;
+  transition: 0.3s ease;
+  font-weight: bold;
+  width: auto;
+  font-size: 17px;
+}
+
+.toolbar-start Button:hover {
+  background-color: #1CA883;
 }
