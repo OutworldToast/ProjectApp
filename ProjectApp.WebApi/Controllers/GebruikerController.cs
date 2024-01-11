@@ -1,11 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.WebApi.Models;
 
+
+//add regex for email??
 public class GebruikerMetWachtwoord {
 
-    public string? Wachtwoord {get; init;}
+    public string? Wachtwoord {get; init;} //requires alphanumeric, number and uppercase
     public string? Emailadres {get; init;}
 }
 
@@ -29,7 +32,7 @@ public class GebruikerController: ControllerBase {
         _signInManager = signInManager;
     }
 
-    [HttpPost("registreer")]
+    [HttpPost("registreer")] //needs email confirmation
     public async Task<ActionResult> Registreer([FromBody] GebruikerMetWachtwoord gebruikerDTO) {
         if (gebruikerDTO.Wachtwoord == null || gebruikerDTO.Emailadres == null) {
             return BadRequest();
@@ -41,24 +44,34 @@ public class GebruikerController: ControllerBase {
             UserName = gebruikerDTO.Emailadres
         };
 
+        // ->> sendemail async 
+
         var resultaat = await _userManager.CreateAsync(gebruiker, gebruikerDTO.Wachtwoord);
         return !resultaat.Succeeded ? BadRequest(resultaat) : Created();
     }
 
-    [HttpPost("login")]
+    [HttpPost("login")] //should use JWT?
     public async Task<ActionResult> Login([FromBody] GebruikerLogin gebruiker){ //identityoptions.requireemailunique ofzo
         if (gebruiker.Emailadres == null || gebruiker.Wachtwoord == null) {
             return BadRequest();
         }
         var _user = await _userManager.FindByEmailAsync(gebruiker.Emailadres);
 
-        //change second bool for 'remember me'
         if (_user != null) {
             var signin = await _signInManager.PasswordSignInAsync(_user, gebruiker.Wachtwoord, gebruiker.RememberMe, true);
             return signin.Succeeded ? Ok() : Unauthorized();
         }
 
         return Unauthorized();
+
+    }
+
+    [HttpPost("logout")]
+    public async Task<ActionResult> Logout([FromBody] GebruikerLogin gebruiker){ //identityoptions.requireemailunique ofzo
+        
+        await _signInManager.SignOutAsync();
+
+        return Ok();
 
     }
 }
