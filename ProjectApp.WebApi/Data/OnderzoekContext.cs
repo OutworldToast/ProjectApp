@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectApp.WebApi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjectApp.WebApi.Data;
 
-public class OnderzoekContext : DbContext {
+public class OnderzoekContext : IdentityDbContext<Gebruiker, IdentityRole<int>, int> {
 
     public OnderzoekContext (DbContextOptions o) : base(o) {
         
