@@ -12,14 +12,16 @@ export default function HomePage() {
       
         <img src={logo} alt="Stichting Accessibility" className='logo'/>
        
-        <nav>
-            <a href="HomePage">Home</a> |
-            <a href="ChatPage">Chat</a> |
-            <a href="LoginPage">Uitloggen</a> |
-            <a href="#Profiel">Profiel</a> |
-            <a href="#Over ons">Over ons</a>
-        </nav>
-    
+        <nav id='menu'>
+        <ul>
+          <li><a href='http://'>Home</a></li>
+          <li><a href='http://'>Chat</a></li>
+          <li><a href='http://'>Profiel</a></li>
+          <li><a href='http://'>Over ons</a></li>
+          <li><a href='http://'>Uitloggen</a></li>
+        </ul>
+      </nav>
+        
         <section id="section1">
             <h2>Section 1</h2>
             <p>Dit is de inhoud van de eerste sectie.</p>
@@ -33,9 +35,9 @@ export default function HomePage() {
         <section id="section3">
             <h2>Section 3</h2>
             <p>Dit is de inhoud van de derde sectie.</p>
-        </section>
-    
-    
+        </section>      
         </div>
+        
     )
+    
 }
