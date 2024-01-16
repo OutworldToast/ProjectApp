@@ -100,6 +100,16 @@ namespace ProjectApp.WebApi.Controllers
             return NoContent();
         }
 
+        
+        [HttpGet("{id}/berichten")]
+        public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id) {
+            if (!ChatExists(id)) {
+                return NotFound();
+            } else {
+                return Ok(await _context.Berichten.Where(b => b.ChatId == id).ToListAsync());
+            }
+        }
+
         private bool ChatExists(int id)
         {
             return _context.Chats.Any(e => e.Id == id);

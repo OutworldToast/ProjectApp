@@ -103,4 +103,18 @@ public class GebruikerController: ControllerBase {
         }
 
     }
+
+    //GET api/Gebruiker/{id}/chats
+    [HttpGet("{id}/chats")]
+    //returnt chat zonder alle berichten
+    public async Task<ActionResult<IEnumerable<ChatHeader>>> Chats(int id) {
+
+         try {
+            var user = await _context.Panelleden.SingleAsync(g => g.Id == id);
+            return Ok(await _context.Chats.Where(c => c.Gebruiker1.Id == id || c.Gebruiker2.Id == id).Select(c => c.ChatHeader()).ToListAsync());
+        } catch (Exception) {
+            return NotFound();
+        }
+
+    }
 }
