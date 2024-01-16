@@ -7,8 +7,6 @@ public class Panellid : Gebruiker {
     public Voogd? Voogd {get; set;}
 
     //Body
-    public string? Voornaam {get; set;}
-    public string? Achternaam {get; set;}
     public List<Beperking> Beperkingen {get; set;} = [];
     public List<string> Hulpmiddelen {get; set;} = [];
     public string? Benaderingsvoorkeur {get; set;}

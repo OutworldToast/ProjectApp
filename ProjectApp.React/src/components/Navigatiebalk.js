@@ -1,6 +1,3 @@
-import Button from "./Button.js";
-import LinkButton from "./LinkButton.js";
-
 function Navigatiebalk() {
 
     return (

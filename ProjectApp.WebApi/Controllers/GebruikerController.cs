@@ -74,4 +74,42 @@ public class GebruikerController: ControllerBase {
         return Ok();
 
     }
+    
+[Authorize]
+[HttpPost("profiel-wijzigen")]
+        public async Task<IActionResult> ProfielWijzigen([FromBody] Gebruiker model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Haal de huidige gebruiker op (via de authenticatie, bijvoorbeeld via User.Identity.Name)
+            var gebruiker = await _userManager.GetUserAsync(User);
+
+            if (gebruiker == null)
+            {
+                return Unauthorized();
+            }
+
+            // Werk de eigenschappen van de gebruiker bij met de nieuwe gegevens
+            gebruiker.Voornaam = model.Voornaam;
+            gebruiker.Achternaam = model.Achternaam;
+            gebruiker.Adres = model.Adres;
+            gebruiker.Postcode = model.Postcode;
+            gebruiker.Telefoonnummer = model.Telefoonnummer;
+
+            // Sla de gebruiker op in de database
+            var result = await _userManager.UpdateAsync(gebruiker);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
+
 }

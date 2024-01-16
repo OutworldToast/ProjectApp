@@ -11,7 +11,7 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BeperkingController : ControllerBase

@@ -2,10 +2,11 @@ import React from "react";
 
 import logo from "../Resources/sia/sta.png";
 import "../CSS/Light.css";
+import ToonData from '../components/ToonData'
 
 export default function HomePage() {
     return (
-        <div class="BasePage">
+        <div className="BasePage">
               <header>
             <h1>Stichting Accessibility</h1>
         </header>
@@ -16,10 +17,12 @@ export default function HomePage() {
             <a href="HomePage">Home</a> |
             <a href="ChatPage">Chat</a> |
             <a href="LoginPage">Uitloggen</a> |
-            <a href="#Profiel">Profiel</a> |
+            <a href="ProfielPage">Profiel</a> |
             <a href="#Over ons">Over ons</a>
         </nav>
-    
+
+        <ToonData />
+        
         <section id="section1">
             <h2>Section 1</h2>
             <p>Dit is de inhoud van de eerste sectie.</p>
@@ -34,7 +37,8 @@ export default function HomePage() {
             <h2>Section 3</h2>
             <p>Dit is de inhoud van de derde sectie.</p>
         </section>
-    
+
+        
     
         </div>
     )
