@@ -100,7 +100,7 @@ namespace ProjectApp.WebApi.Controllers
             return NoContent();
         }
 
-        
+        // GET api/Chat/id/
         [HttpGet("{id}/berichten")]
         public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id) {
             if (!ChatExists(id)) {
