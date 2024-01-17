@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjectApp.WebApi.Data;
 using ProjectApp.WebApi.Models;
 
 
@@ -26,10 +28,12 @@ public class GebruikerController: ControllerBase {
 
     private readonly UserManager<Gebruiker> _userManager;
     private readonly SignInManager<Gebruiker> _signInManager;
+    private readonly OnderzoekContext _context; 
 
-    public GebruikerController(UserManager<Gebruiker> userManager, SignInManager<Gebruiker> signInManager) {
+    public GebruikerController(UserManager<Gebruiker> userManager, SignInManager<Gebruiker> signInManager, OnderzoekContext context) {
         _userManager = userManager;
         _signInManager = signInManager;
+        _context = context;
     }
 
     [HttpPost("registreer")] //needs email confirmation
@@ -67,14 +71,66 @@ public class GebruikerController: ControllerBase {
     }
 
     [HttpPost("logout")]
-    public async Task<ActionResult> Logout([FromBody] GebruikerLogin gebruiker){ //identityoptions.requireemailunique ofzo
+    public async Task<ActionResult> Logout(){ //identityoptions.requireemailunique ofzo
         
         await _signInManager.SignOutAsync();
 
         return Ok();
 
     }
-    
+
+    // GET: api/Gebruiker/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Gebruiker>> GetGebruiker(int id)
+        {
+            var gebruiker = await _context.Gebruikers.FindAsync(id);
+
+            if (gebruiker == null)
+            {
+                return NotFound();
+            }
+
+            return gebruiker;
+        }
+
+    //GET api/Gebruiker/{id}/deelnames
+    [HttpGet("{id}/deelnames")]
+    public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
+
+        try {
+            await _context.Gebruikers.SingleAsync(g => g.Id == id);
+            return Ok(await _context.Deelnames.Where(d => d.PanellidId == id).Select(d => d.Onderzoek).ToListAsync());
+        } catch (Exception) {
+            return NotFound();
+        }
+    }
+
+    //GET api/Gebruiker/{id}/onderzoeken
+    [HttpGet("{id}/onderzoeken")]
+    public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVoorGebruiker(int id) {
+
+        try {
+            var user = await _context.Panelleden.SingleAsync(g => g.Id == id);
+            return Ok(await _context.Onderzoeken.Where(o => user.Beperkingen.Contains(o.TypeBeperking)).ToListAsync());
+        } catch (Exception) {
+            return NotFound();
+        }
+
+    }
+
+    //GET api/Gebruiker/{id}/chats
+    [HttpGet("{id}/chats")]
+    //returnt chat zonder alle berichten
+    public async Task<ActionResult<IEnumerable<ChatHeader>>> Chats(int id) {
+
+         try {
+            var user = await _context.Panelleden.SingleAsync(g => g.Id == id);
+            return Ok(await _context.Chats.Where(c => c.Gebruiker1.Id == id || c.Gebruiker2.Id == id).Select(c => c.ChatHeader()).ToListAsync());
+        } catch (Exception) {
+            return NotFound();
+        }
+
+    }
 [Authorize]
 [HttpPost("profiel-wijzigen")]
         public async Task<IActionResult> ProfielWijzigen([FromBody] Gebruiker model)
@@ -93,8 +149,8 @@ public class GebruikerController: ControllerBase {
             }
 
             // Werk de eigenschappen van de gebruiker bij met de nieuwe gegevens
-            gebruiker.Voornaam = model.Voornaam;
-            gebruiker.Achternaam = model.Achternaam;
+            model.Voornaam = model.Voornaam;
+            model.Achternaam = model.Achternaam;
             gebruiker.Adres = model.Adres;
             gebruiker.Postcode = model.Postcode;
             gebruiker.Telefoonnummer = model.Telefoonnummer;
