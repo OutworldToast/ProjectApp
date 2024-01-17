@@ -8,14 +8,6 @@ namespace ProjectApp.WebApi.Controllers;
 [Route("Api/{controller}")]
 public class OnderzoekController : ControllerBase
 {
-    
-    // private readonly ILogger<WeatherForecastController> _logger;
-
-    // public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    // {
-    //     _logger = logger;
-    // }
-
     private OnderzoekContext _context;
 
     public OnderzoekController(OnderzoekContext context) {

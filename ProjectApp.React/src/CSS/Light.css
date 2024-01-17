@@ -6,14 +6,15 @@ body{
   margin: 0;
   padding: 0;
 }
-
+.BasePage{
+  color: #000;
+}
 .logo{
   position: absolute;
   padding: 5px;
   cursor: pointer;
   left: 25px;
   top: 0%;
- 
 }
 
 .toolbar-start Button {
@@ -23,18 +24,25 @@ body{
   border: none;
   cursor: pointer;
   margin-right: 10px;
-  
-.App-logo img{
- max-width: 100%;
- height: auto;
+}
+
+.App-logo{
+  bottom: 20px;
+  width: 175px;
+  position: relative;
+  left: 20px;
 }
 
 #menu {
-	background: #ffffff;
-	height: 45px;
-	border-radius: 36px;
-	border: 1px solid #6D6D6D;
+  background: #ffffff;
+  height: 45px;
+  border-radius: 36px;
+  border: 1px solid #6D6D6D;
+  position: absolute;
+  top: 8%;
+  left: 29%;
 }
+
 #menu ul, #menu li {
 	margin: 0 auto;
 	padding: 0;

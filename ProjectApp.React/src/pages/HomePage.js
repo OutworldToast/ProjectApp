@@ -2,7 +2,6 @@ import React from "react";
 
 import logo from "../Resources/sia/sta.png";
 import "../CSS/Light.css";
-import ToonData from '../components/ToonData'
 
 export default function HomePage() {
     return (
@@ -15,29 +14,23 @@ export default function HomePage() {
       
         <nav id='menu'>
         <ul>
-          <li><a href='http://'>Home</a></li>
-          <li><a href='http://'>Chat</a></li>
-          <li><a href='http://'>Profiel</a></li>
-          <li><a href='http://'>Over ons</a></li>
-          <li><a href='http://'>Uitloggen</a></li>
+          <li><a href='HomePage'>Home</a></li>
+          <li><a href='ChatPage'>Chat</a></li>
+          <li><a href='ProfielPage'>Profiel</a></li>
+          <li><a href='OnderzoekPage'>Onderzoek</a></li>
+          <li><a href='LoginPage'>Uitloggen</a></li>
         </ul>
       </nav>
         
         <section id="section1">
-            <h2>Section 1</h2>
-            <p>Dit is de inhoud van de eerste sectie.</p>
+            <h2>Mijn Onderzoeken</h2>
+            
         </section>
     
         <section id="section2">
-            <h2>Section 2</h2>
-            <p>Dit is de inhoud van de tweede sectie.</p>
+            <h2>Nieuwe Onderzoeken</h2>
         </section>
     
-        <section id="section3">
-            <h2>Section 3</h2>
-            <p>Dit is de inhoud van de derde sectie.</p>
-
-        </section>      
         </div>
         
     )
