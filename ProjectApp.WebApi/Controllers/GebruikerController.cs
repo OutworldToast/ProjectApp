@@ -71,7 +71,7 @@ public class GebruikerController: ControllerBase {
     }
 
     [HttpPost("logout")]
-    public async Task<ActionResult> Logout([FromBody] GebruikerLogin gebruiker){ //identityoptions.requireemailunique ofzo
+    public async Task<ActionResult> Logout(){ //identityoptions.requireemailunique ofzo
         
         await _signInManager.SignOutAsync();
 
