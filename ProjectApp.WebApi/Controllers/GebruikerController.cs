@@ -79,6 +79,20 @@ public class GebruikerController: ControllerBase {
 
     }
 
+    // GET: api/Gebruiker/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Gebruiker>> GetGebruiker(int id)
+        {
+            var gebruiker = await _context.Gebruikers.FindAsync(id);
+
+            if (gebruiker == null)
+            {
+                return NotFound();
+            }
+
+            return gebruiker;
+        }
+
     //GET api/Gebruiker/{id}/deelnames
     [HttpGet("{id}/deelnames")]
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
