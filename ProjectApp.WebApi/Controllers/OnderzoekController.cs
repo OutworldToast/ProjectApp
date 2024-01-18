@@ -44,6 +44,19 @@ namespace ProjectApp.WebApi.Controllers
             return Ok(Onderzoek);
         }
 
+        // GET: api/Onderzoek/Beperking?id=2
+        [HttpGet("Beperking")]
+        public async Task<ActionResult<Onderzoek>> GetOnderzoekByBeperking([FromQuery] int id)
+        {
+            var beperking = await _context.Beperkingen.FindAsync(id);
+            if (beperking == null) {
+                return NotFound("Geen beperking met deze ID gevonden");
+            }
+            var onderzoeken = await _context.Onderzoeken.Where(o => o.BeperkingId == id).ToListAsync();
+
+            return Ok(onderzoeken);
+        }
+
         // PUT: api/Onderzoek/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

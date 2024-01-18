@@ -61,31 +61,31 @@ public class OnderzoekControllerTest : IDisposable
 
     [Fact]
     public async void GetOnderzoekenTest() {
-        //arrange
-        OnderzoekController controller = new(_context);
+    //arrange
+    OnderzoekController controller = new(_context);
 
-        //act
-        var result = await controller.GetOnderzoeken();
+    //act
+    var result = await controller.GetOnderzoeken();
 
-        //assert
-        var okObjectResult = Assert.IsType<OkObjectResult>(result);
+    //assert
+    var okObjectResult = Assert.IsType<OkObjectResult>(result);
         var onderzoeken = Assert.IsType<List<Onderzoek>>(okObjectResult);
         Assert.Single(onderzoeken);
     }
 
     [Fact]
     public async void GetOnderzoekExistsTest() {
-        //arrange
-        OnderzoekController controller = new(_context);
+    //arrange
+    OnderzoekController controller = new(_context);
 
-        //act
-        var result = await controller.GetOnderzoek(1);
+    //act
+    var result = await controller.GetOnderzoek(1);
 
-        //assert
-        var okObjectResult = Assert.IsType<OkObjectResult>(result);
-        var onderzoek = Assert.IsType<Onderzoek>(okObjectResult.Value); 
-        var actual = onderzoek.Beloning;
-        Assert.Equal(5, actual);
+    //assert
+    var okObjectResult = Assert.IsType<OkObjectResult>(result);
+    var onderzoek = Assert.IsType<Onderzoek>(okObjectResult.Value); 
+    var actual = onderzoek.Beloning;
+    Assert.Equal(5, actual);
     }
 
     [Fact]

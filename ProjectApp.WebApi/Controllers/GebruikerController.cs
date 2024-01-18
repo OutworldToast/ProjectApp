@@ -104,13 +104,15 @@ public class GebruikerController: ControllerBase {
             var user = await _context.Gebruikers.SingleAsync(g => g.Id == id);
             if (user.GetType() == typeof(Panellid)) {
                 var controller = new PanellidController (_context);
-                return await controller.OnderzoekenVanPanellid(id);
+                return await controller.OnderzoekenVanGebruiker(id);
             } else 
             if (user.GetType() == typeof(Bedrijf)){
-                
+                var controller = new BedrijfController (_context);
+                return await controller.OnderzoekenVanGebruiker(id);
+            } else {
+                return BadRequest(user.GetType());
             }
             
-            return Ok(await _context.Deelnames.Where(d => d.PanellidId == id).Select(d => d.Onderzoek).ToListAsync());
         } catch (Exception) {
             return NotFound();
         }
