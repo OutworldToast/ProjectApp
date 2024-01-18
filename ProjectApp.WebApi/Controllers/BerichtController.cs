@@ -58,7 +58,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Bericht/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBericht(int id, Bericht bericht)
+        public async Task<IActionResult> PutBericht(int id, [FromBody] Bericht bericht)
         {
             if (id != bericht.Id)
             {
@@ -89,7 +89,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Bericht
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Bericht>> Postbericht(BerichtPost berichtPost)
+        public async Task<ActionResult<Bericht>> Postbericht([FromBody] BerichtPost berichtPost)
         {
             Bericht bericht = new Bericht {
                 Chat = await _context.Chats.FindAsync(berichtPost.ChatId),

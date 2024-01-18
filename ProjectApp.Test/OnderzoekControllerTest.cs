@@ -5,8 +5,7 @@ using ProjectApp.WebApi.Data;
 using ProjectApp.WebApi.Controllers;
 using System.Diagnostics;
 using ProjectApp.WebApi.Models;
-
-
+using Microsoft.AspNetCore.Mvc;
 
 public class OnderzoekControllerTest : IDisposable
 {
@@ -61,27 +60,44 @@ public class OnderzoekControllerTest : IDisposable
     }
 
     [Fact]
-    public void GetOnderzoekExistsTest() {
+    public async void GetOnderzoekenTest() {
         //arrange
         OnderzoekController controller = new(_context);
 
         //act
-        var result = controller.GetOnderzoek(1).Beloning;
+        var result = await controller.GetOnderzoeken();
 
         //assert
-        Assert.Equal(5, result);
+        var okObjectResult = Assert.IsType<OkObjectResult>(result);
+        var onderzoeken = Assert.IsType<List<Onderzoek>>(okObjectResult);
+        Assert.Single(onderzoeken);
     }
 
     [Fact]
-    public void GetOnderzoekNotExistsTest() {
+    public async void GetOnderzoekExistsTest() {
         //arrange
         OnderzoekController controller = new(_context);
 
         //act
-        // var result = controller.GetOnderzoek(20).Beloning;
+        var result = await controller.GetOnderzoek(1);
 
         //assert
-        Assert.Throws<InvalidOperationException>(() => controller.GetOnderzoek(20).Beloning);
+        var okObjectResult = Assert.IsType<OkObjectResult>(result);
+        var onderzoek = Assert.IsType<Onderzoek>(okObjectResult.Value); 
+        var actual = onderzoek.Beloning;
+        Assert.Equal(5, actual);
+    }
+
+    [Fact]
+    public async void GetOnderzoekNotExistsTest() {
+        //arrange
+        OnderzoekController controller = new(_context);
+
+        //act
+        var result = await controller.GetOnderzoek(20);
+
+        //assert
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 
     //Gooit na elke test het database weg

@@ -8,6 +8,8 @@ public class Onderzoek {
     //FKs
     public Beperking? TypeBeperking {get;set;}
     public int BeperkingId {get; set;}
+    public Bedrijf? Bedrijf {get; set;}
+    public int BedrijfId {get; set;}
 
     //Body
     public string? Titel {get;set;}

@@ -27,7 +27,7 @@ namespace ProjectApp.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoeken()
         {
-            return await _context.Onderzoeken.ToListAsync();
+            return Ok(await _context.Onderzoeken.ToListAsync());
         }
 
         // GET: api/Onderzoek/5
@@ -41,13 +41,13 @@ namespace ProjectApp.WebApi.Controllers
                 return NotFound();
             }
 
-            return Onderzoek;
+            return Ok(Onderzoek);
         }
 
         // PUT: api/Onderzoek/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek Onderzoek)
+        public async Task<IActionResult> PutOnderzoek(int id, [FromBody] Onderzoek Onderzoek)
         {
             if (id != Onderzoek.Id)
             {
@@ -78,7 +78,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Onderzoek
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek Onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek Onderzoek)
         {
             _context.Onderzoeken.Add(Onderzoek);
             await _context.SaveChangesAsync();

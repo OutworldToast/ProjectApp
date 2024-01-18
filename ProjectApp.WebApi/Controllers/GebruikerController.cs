@@ -2,7 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using ProjectApp.WebApi.Controllers;
 using ProjectApp.WebApi.Data;
 using ProjectApp.WebApi.Models;
 
@@ -98,13 +100,23 @@ public class GebruikerController: ControllerBase {
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
 
         try {
-            await _context.Gebruikers.SingleAsync(g => g.Id == id);
+            
+            var user = await _context.Gebruikers.SingleAsync(g => g.Id == id);
+            if (user.GetType() == typeof(Panellid)) {
+                var controller = new PanellidController (_context);
+                return await controller.OnderzoekenVanPanellid(id);
+            } else 
+            if (user.GetType() == typeof(Bedrijf)){
+                
+            }
+            
             return Ok(await _context.Deelnames.Where(d => d.PanellidId == id).Select(d => d.Onderzoek).ToListAsync());
         } catch (Exception) {
             return NotFound();
         }
     }
 
+    //moet voor panellid zijn
     //GET api/Gebruiker/{id}/onderzoeken
     [HttpGet("{id}/onderzoeken")]
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVoorGebruiker(int id) {
@@ -131,70 +143,4 @@ public class GebruikerController: ControllerBase {
         }
 
     }
-    
-    [Authorize]
-    [HttpPost("profiel-wijzigen")]
-    public async Task<IActionResult> ProfielWijzigen([FromBody] Gebruiker model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        
-        var gebruiker = await _userManager.GetUserAsync(User);
-
-        if (gebruiker == null)
-        {
-            return Unauthorized();
-        }
-
-        
-        // if (!string.IsNullOrEmpty(model.Voornaam))
-        // {
-        //     gebruiker.Voornaam = model.Voornaam;
-        // }
-
-        // if (!string.IsNullOrEmpty(model.Achternaam))
-        // {
-        //     gebruiker.Achternaam = model.Achternaam;
-        // }
-
-        if (!string.IsNullOrEmpty(model.Adres))
-        {
-            gebruiker.Adres = model.Adres;
-        }
-
-        if (!string.IsNullOrEmpty(model.Postcode))
-        {
-            gebruiker.Postcode = model.Postcode;
-        }
-
-        if (model.Telefoonnummer != 0)
-        {
-            gebruiker.Telefoonnummer = model.Telefoonnummer;
-        }
-            // Optioneel veld: Hulpmiddelen
-        // if (model.Hulpmiddelen != null)
-        {
-        // Controleer of de lijst niet leeg is voordat deze wordt bijgewerkt
-        // if (model.Hulpmiddelen.Any())
-        // {
-        //     gebruiker.Hulpmiddelen = model.Hulpmiddelen;
-        // }
-        }
-
-        var result = await _userManager.UpdateAsync(gebruiker);
-
-        if (result.Succeeded)
-        {
-            return Ok();
-        }
-        else
-        {
-            return BadRequest(result.Errors);
-        }
-    }
-
-
 }

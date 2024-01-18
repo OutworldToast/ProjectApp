@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,49 +11,50 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ChatController : ControllerBase
+    public class VoogdController : ControllerBase
     {
         private readonly OnderzoekContext _context;
 
-        public ChatController(OnderzoekContext context)
+        public VoogdController(OnderzoekContext context)
         {
             _context = context;
         }
 
-        // GET: api/Chat
+        // GET: api/Voogd
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chat>>> GetChats()
+        public async Task<ActionResult<IEnumerable<Voogd>>> GetVoogden()
         {
-            return await _context.Chats.ToListAsync();
+            return Ok(await _context.Voogden.ToListAsync());
         }
 
-        // GET: api/Chat/5
+        // GET: api/Voogd/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chat>> GetChat(int id)
+        public async Task<ActionResult<Voogd>> GetVoogd(int id)
         {
-            var chat = await _context.Chats.FindAsync(id);
+            var voogd = await _context.Voogden.FindAsync(id);
 
-            if (chat == null)
+            if (voogd == null)
             {
                 return NotFound();
             }
 
-            return chat;
+            return Ok(voogd);
         }
 
-        // PUT: api/Chat/5
+        // PUT: api/Voogd/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(int id,[FromBody] Chat chat)
+        public async Task<IActionResult> PutVoogd(int id, [FromBody] Voogd voogd)
         {
-            if (id != chat.Id)
+            if (id != voogd.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(chat).State = EntityState.Modified;
+            _context.Entry(voogd).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +62,7 @@ namespace ProjectApp.WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChatExists(id))
+                if (!VoogdExists(id))
                 {
                     return NotFound();
                 }
@@ -73,46 +75,37 @@ namespace ProjectApp.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Chat
+        // POST: api/Voogd
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Chat>> PostChat([FromBody] Chat chat)
+        public async Task<ActionResult<Voogd>> PostVoogd([FromBody] Voogd voogd)
         {
-            _context.Chats.Add(chat);
+            _context.Voogden.Add(voogd);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChat", new { id = chat.Id }, chat);
+            return CreatedAtAction("GetVoogd", new { id = voogd.Id }, voogd);
         }
 
-        // DELETE: api/Chat/5
+        // DELETE: api/Voogd/5
+        // Add special authorisation?
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChat(int id)
+        public async Task<IActionResult> DeleteVoogd(int id)
         {
-            var chat = await _context.Chats.FindAsync(id);
-            if (chat == null)
+            var voogd = await _context.Voogden.FindAsync(id);
+            if (voogd == null)
             {
                 return NotFound();
             }
 
-            _context.Chats.Remove(chat);
+            _context.Voogden.Remove(voogd);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // GET api/Chat/id/berichten
-        [HttpGet("{id}/berichten")]
-        public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id) {
-            if (!ChatExists(id)) {
-                return NotFound();
-            } else {
-                return Ok(await _context.Berichten.Where(b => b.ChatId == id).ToListAsync());
-            }
-        }
-
-        private bool ChatExists(int id)
+        private bool VoogdExists(int id)
         {
-            return _context.Chats.Any(e => e.Id == id);
+            return _context.Voogden.Any(e => e.Id == id);
         }
     }
 }
