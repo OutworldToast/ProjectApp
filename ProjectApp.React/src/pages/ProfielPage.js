@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ProfielFormulier = () => {
   const [gegevens, setGegevens] = useState({
@@ -7,11 +7,27 @@ const ProfielFormulier = () => {
     adres: '',
     postcode: '',
     telefoonnummer: '',
+    geselecteerdeBeperking: '', // Nieuw veld voor de geselecteerde beperking
     // Voeg andere velden toe indien nodig...
   });
 
+  const [beperkingen, setBeperkingen] = useState([]);
+
+  useEffect(() => {
+    // Fetch beperkingen en zet ze in de state
+    fetch('/api/Beperking')
+      .then(response => response.json())
+      .then(data => setBeperkingen(data))
+      .catch(err => console.log(err));
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Filter alleen de ingevulde velden
+    const gevuldeGegevens = Object.fromEntries(
+      Object.entries(gegevens).filter(([_, value]) => value !== '')
+    );
 
     try {
       const response = await fetch('api/gebruiker/profiel-wijzigen', {
@@ -19,7 +35,7 @@ const ProfielFormulier = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(gegevens),
+        body: JSON.stringify(gevuldeGegevens),
       });
 
       if (response.ok) {
@@ -41,34 +57,53 @@ const ProfielFormulier = () => {
     }));
   };
 
+  const handleBeperkingChange = (e) => {
+    setGegevens((prevGegevens) => ({
+      ...prevGegevens,
+      geselecteerdeBeperking: e.target.value,
+    }));
+  };
+
   return (
     <form onSubmit={handleSubmit} className="profiel-formulier">
       <label>
         Voornaam:
-        <input type="text" name="voornaam" value={gegevens.voornaam} onChange={handleChange} required />
+        <input type="text" name="voornaam" value={gegevens.voornaam} onChange={handleChange}/>
       </label>
       <br />
       <label>
         Achternaam:
-        <input type="text" name="achternaam" value={gegevens.achternaam} onChange={handleChange} required />
+        <input type="text" name="achternaam" value={gegevens.achternaam} onChange={handleChange} />
       </label>
       <br />
       <label>
         Adres:
-        <input type="text" name="adres" value={gegevens.adres} onChange={handleChange} required />
+        <input type="text" name="adres" value={gegevens.adres} onChange={handleChange} />
       </label>
       <br />
       <label>
         Postcode:
-        <input type="text" name="postcode" value={gegevens.postcode} onChange={handleChange} required />
+        <input type="text" name="postcode" value={gegevens.postcode} onChange={handleChange} />
       </label>
       <br />
       <label>
         Telefoonnummer:
-        <input type="tel" name="telefoonnummer" value={gegevens.telefoonnummer} onChange={handleChange} required />
+        <input type="tel" name="telefoonnummer" value={gegevens.telefoonnummer} onChange={handleChange}/>
+      </label>
+      
+      <label>
+        Beperking:
+        <select name="geselecteerdeBeperking" value={gegevens.geselecteerdeBeperking} onChange={handleBeperkingChange}>
+          <option value="">Selecteer een beperking</option>
+          {beperkingen.map((beperking, index) => (
+            <option key={index} value={beperking.categorie}>
+              {beperking.categorie}
+            </option>
+          ))}
+        </select>
       </label>
       <br />
-      <br />
+      
       <button type="submit">Opslaan</button>
     </form>
   );

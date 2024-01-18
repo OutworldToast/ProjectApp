@@ -131,41 +131,70 @@ public class GebruikerController: ControllerBase {
         }
 
     }
-[Authorize]
-[HttpPost("profiel-wijzigen")]
-        public async Task<IActionResult> ProfielWijzigen([FromBody] Gebruiker model)
+    
+    [Authorize]
+    [HttpPost("profiel-wijzigen")]
+    public async Task<IActionResult> ProfielWijzigen([FromBody] Gebruiker model)
+    {
+        if (!ModelState.IsValid)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // Haal de huidige gebruiker op (via de authenticatie, bijvoorbeeld via User.Identity.Name)
-            var gebruiker = await _userManager.GetUserAsync(User);
-
-            if (gebruiker == null)
-            {
-                return Unauthorized();
-            }
-
-            // Werk de eigenschappen van de gebruiker bij met de nieuwe gegevens
-            model.Voornaam = model.Voornaam;
-            model.Achternaam = model.Achternaam;
-            gebruiker.Adres = model.Adres;
-            gebruiker.Postcode = model.Postcode;
-            gebruiker.Telefoonnummer = model.Telefoonnummer;
-
-            // Sla de gebruiker op in de database
-            var result = await _userManager.UpdateAsync(gebruiker);
-
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
+            return BadRequest(ModelState);
         }
+
+        
+        var gebruiker = await _userManager.GetUserAsync(User);
+
+        if (gebruiker == null)
+        {
+            return Unauthorized();
+        }
+
+        
+        // if (!string.IsNullOrEmpty(model.Voornaam))
+        // {
+        //     gebruiker.Voornaam = model.Voornaam;
+        // }
+
+        // if (!string.IsNullOrEmpty(model.Achternaam))
+        // {
+        //     gebruiker.Achternaam = model.Achternaam;
+        // }
+
+        if (!string.IsNullOrEmpty(model.Adres))
+        {
+            gebruiker.Adres = model.Adres;
+        }
+
+        if (!string.IsNullOrEmpty(model.Postcode))
+        {
+            gebruiker.Postcode = model.Postcode;
+        }
+
+        if (model.Telefoonnummer != 0)
+        {
+            gebruiker.Telefoonnummer = model.Telefoonnummer;
+        }
+            // Optioneel veld: Hulpmiddelen
+        // if (model.Hulpmiddelen != null)
+        {
+        // Controleer of de lijst niet leeg is voordat deze wordt bijgewerkt
+        // if (model.Hulpmiddelen.Any())
+        // {
+        //     gebruiker.Hulpmiddelen = model.Hulpmiddelen;
+        // }
+        }
+
+        var result = await _userManager.UpdateAsync(gebruiker);
+
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
+
 
 }

@@ -5,6 +5,7 @@ import BasePage from './pages/BasePage.js';
 import HomePage from './pages/HomePage.js';
 import RegisterPage from './pages/RegisterPage.js';
 import ProfielPage from './pages/ProfielPage.js';
+import OnderzoekPage from "./pages/OnderzoekPage.js";
 
 import './CSS/Light.css';
 import './CSS/Dark.css';
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/HomePage" element={<HomePage />} />
           <Route exact path="/RegisterPage" element={<RegisterPage />} />
           <Route exact path="/ProfielPage" element={<ProfielPage />} />
+          <Route exact path="/OnderzoekPage" element={<OnderzoekPage />} />
           {/* <Route exact path="/ChatPage" element={<ChatPage />} /> */}
         </Routes>
       </div>

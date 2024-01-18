@@ -14,7 +14,7 @@ function FetchData(){
     <div>
       <ul>
         {beperking.map((list,index)=> (
-          <li key ={index}>{list.id} {list.categorie} </li>
+          <li key ={index}>{list.categorie}</li>
         ))}
       </ul>
     </div>
