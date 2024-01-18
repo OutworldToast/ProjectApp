@@ -16,7 +16,7 @@ public class Chat {
     public string? Naam {get; set;}
 
     public ChatHeader ChatHeader() {
-        return new ChatHeader(Id, Gebruiker1, Gebruiker2, Naam);
+        return new ChatHeader(Id, Gebruiker1!, Gebruiker2!, Naam!);
     }
     
 }
