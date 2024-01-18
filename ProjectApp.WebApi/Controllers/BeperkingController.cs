@@ -47,7 +47,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Beperking/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeperking(int id, Beperking beperking)
+        public async Task<IActionResult> PutBeperking(int id, [FromBody] Beperking beperking)
         {
             if (id != beperking.Id)
             {
@@ -78,7 +78,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Beperking
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Beperking>> PostBeperking(Beperking beperking)
+        public async Task<ActionResult<Beperking>> PostBeperking([FromBody] Beperking beperking)
         {
             _context.Beperkingen.Add(beperking);
             await _context.SaveChangesAsync();

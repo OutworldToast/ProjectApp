@@ -47,7 +47,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Voogd/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVoogd(int id, Voogd voogd)
+        public async Task<IActionResult> PutVoogd(int id, [FromBody] Voogd voogd)
         {
             if (id != voogd.Id)
             {
@@ -78,7 +78,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Voogd
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Voogd>> PostVoogd(Voogd voogd)
+        public async Task<ActionResult<Voogd>> PostVoogd([FromBody] Voogd voogd)
         {
             _context.Voogden.Add(voogd);
             await _context.SaveChangesAsync();

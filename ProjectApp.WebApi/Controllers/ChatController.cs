@@ -45,7 +45,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Chat/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(int id, Chat chat)
+        public async Task<IActionResult> PutChat(int id,[FromBody] Chat chat)
         {
             if (id != chat.Id)
             {
@@ -76,7 +76,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Chat
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Chat>> PostChat(Chat chat)
+        public async Task<ActionResult<Chat>> PostChat([FromBody] Chat chat)
         {
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();

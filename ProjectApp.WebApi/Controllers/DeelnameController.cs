@@ -47,7 +47,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Deelname/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeelname(int id, Deelname Deelname)
+        public async Task<IActionResult> PutDeelname(int id, [FromBody] Deelname Deelname)
         {
             if (id != Deelname.Id)
             {
@@ -78,7 +78,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Deelname
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Deelname>> PostDeelname(Deelname Deelname)
+        public async Task<ActionResult<Deelname>> PostDeelname([FromBody] Deelname Deelname)
         {
             _context.Deelnames.Add(Deelname);
             await _context.SaveChangesAsync();

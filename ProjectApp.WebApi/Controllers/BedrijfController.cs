@@ -47,7 +47,7 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Bedrijf/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBedrijf(int id, Bedrijf Bedrijf)
+        public async Task<IActionResult> PutBedrijf(int id, [FromBody] Bedrijf Bedrijf)
         {
             if (id != Bedrijf.Id)
             {
@@ -78,7 +78,7 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Bedrijf
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Bedrijf>> PostBedrijf(Bedrijf Bedrijf)
+        public async Task<ActionResult<Bedrijf>> PostBedrijf([FromBody] Bedrijf Bedrijf)
         {
             _context.Bedrijven.Add(Bedrijf);
             await _context.SaveChangesAsync();
