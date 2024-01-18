@@ -93,6 +93,7 @@ public class GebruikerController: ControllerBase {
             return gebruiker;
         }
 
+    //deze twee moeten voor panellid zijn
     //GET api/Gebruiker/{id}/deelnames
     [HttpGet("{id}/deelnames")]
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {

@@ -27,7 +27,7 @@ namespace ProjectApp.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoeken()
         {
-            return await _context.Onderzoeken.ToListAsync();
+            return Ok(await _context.Onderzoeken.ToListAsync());
         }
 
         // GET: api/Onderzoek/5
@@ -41,7 +41,7 @@ namespace ProjectApp.WebApi.Controllers
                 return NotFound();
             }
 
-            return Onderzoek;
+            return Ok(Onderzoek);
         }
 
         // PUT: api/Onderzoek/5
