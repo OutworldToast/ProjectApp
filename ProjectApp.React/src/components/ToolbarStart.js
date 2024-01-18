@@ -1,4 +1,3 @@
-import Button from "./Button.js";
 import LinkButton from "./LinkButton.js";
 
 function ToolbarStart(){
@@ -8,7 +7,7 @@ function ToolbarStart(){
             body = {"Login"}
             link = {"/LoginPage"}
             />
-            <Button
+            <LinkButton
             body = {"Registreer"}
             link = {"/RegisterPage"}
             />
