@@ -44,6 +44,20 @@ namespace ProjectApp.WebApi.Controllers
             return Ok(panellid);
         }
 
+        // GET: api/Panellid/5/deelnames
+        [HttpGet("{id}/deelnames")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanPanellid(int id) {
+
+            try {
+            
+                await _context.Gebruikers.SingleAsync(g => g.Id == id);
+                return Ok(await _context.Deelnames.Where(d => d.PanellidId == id).Select(d => d.Onderzoek).ToListAsync());
+
+            } catch (Exception) {
+                return NotFound();
+            }
+        }
+
         // PUT: api/Panellid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

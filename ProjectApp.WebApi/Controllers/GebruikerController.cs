@@ -2,7 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using ProjectApp.WebApi.Controllers;
 using ProjectApp.WebApi.Data;
 using ProjectApp.WebApi.Models;
 
@@ -93,19 +95,28 @@ public class GebruikerController: ControllerBase {
             return gebruiker;
         }
 
-    //deze twee moeten voor panellid zijn
     //GET api/Gebruiker/{id}/deelnames
     [HttpGet("{id}/deelnames")]
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
 
         try {
-            await _context.Gebruikers.SingleAsync(g => g.Id == id);
+            
+            var user = await _context.Gebruikers.SingleAsync(g => g.Id == id);
+            if (user.GetType() == typeof(Panellid)) {
+                var controller = new PanellidController (_context);
+                return await controller.OnderzoekenVanPanellid(id);
+            } else 
+            if (user.GetType() == typeof(Bedrijf)){
+                
+            }
+            
             return Ok(await _context.Deelnames.Where(d => d.PanellidId == id).Select(d => d.Onderzoek).ToListAsync());
         } catch (Exception) {
             return NotFound();
         }
     }
 
+    //moet voor panellid zijn
     //GET api/Gebruiker/{id}/onderzoeken
     [HttpGet("{id}/onderzoeken")]
     public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVoorGebruiker(int id) {
