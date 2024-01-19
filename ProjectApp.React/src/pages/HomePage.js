@@ -22,6 +22,7 @@ export default function HomePage() {
           <li><a href='ProfielPage'>Profiel</a></li>
           <li><a href='OnderzoekPage'>Onderzoek</a></li>
           <li><a href='LoginPage'>Uitloggen</a></li>
+          <li><a href='MaakOnderzoekPage'>Maak Onderzoek</a></li>
         </ul>
       </nav>
         

@@ -19,6 +19,7 @@ builder.Services.AddAuthentication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// SHOULD NOT BE IN HERE IN PRODUCTION
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(

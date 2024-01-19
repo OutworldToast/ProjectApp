@@ -91,12 +91,30 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Onderzoek
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek Onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek onderzoek)
         {
-            _context.Onderzoeken.Add(Onderzoek);
+            if (onderzoek.Tijdslimiet > onderzoek.Onderzoeksdatum) {
+                return BadRequest("Tijdslimiet niet toegestaan");
+            }
+
+            var beperking = await _context.Beperkingen.FindAsync(onderzoek.BeperkingId);
+            if (beperking == null) {
+                return NotFound("Geen beperking met deze ID gevonden");
+            }
+            onderzoek.TypeBeperking = beperking;
+
+            var bedrijf = await _context.Bedrijven.FindAsync(onderzoek.BedrijfId);
+            if (beperking == null) {
+                return NotFound("Bedrijf bestaat niet");
+            }
+            onderzoek.Bedrijf = bedrijf;
+
+            onderzoek.Status = "Open";
+
+            _context.Onderzoeken.Add(onderzoek);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = Onderzoek.Id }, Onderzoek);
+            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
         }
 
         // DELETE: api/Onderzoek/5
