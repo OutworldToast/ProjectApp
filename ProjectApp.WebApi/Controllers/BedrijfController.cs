@@ -77,6 +77,7 @@ namespace ProjectApp.WebApi.Controllers
 
         // POST: api/Bedrijf
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //moet deze wel bestaan?
         [HttpPost]
         public async Task<ActionResult<Bedrijf>> PostBedrijf([FromBody] Bedrijf Bedrijf)
         {
