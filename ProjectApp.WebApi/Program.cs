@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectApp.WebApi.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Configuration;
+using ProjectApp.WebApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +11,24 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<OnderzoekContext>( //vulnerability in connection string => TrustServerCertificate = true
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("WDPRConnection"))
     );
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<Gebruiker, IdentityRole<int>>()
                 .AddEntityFrameworkStores<OnderzoekContext>()
                 .AddDefaultTokenProviders();
 builder.Services.AddAuthentication();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 

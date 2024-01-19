@@ -1,23 +1,28 @@
 import Button from "./Button.js";
+import LinkButton from "./LinkButton.js";
 
 function Toolbar() {
 
     return (
-        <div>
+        <div >
             <Button 
             message = {"->> open profiel"}
             body = {"Profiel"}
             />
 
-            <Button 
-            message = {"->> open chat"}
-            body = {"Chat"}
+
+            <LinkButton
+            link={'/ChatPage'}
+            body={'Chat'}
             />
 
-            <Button 
-            message = {"->> open onderzoek"}
-            body = {"Onderzoeken"}
+          
+            
+            <LinkButton
+            link = {'/LoginPage'}
+            body = {'Login'}
             />
+            
         </div>
     )
 

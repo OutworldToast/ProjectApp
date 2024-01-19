@@ -8,6 +8,5 @@ public class Gebruiker : IdentityUser<int> {
     public string? Adres {get; set;}
     public string? Postcode {get; set;}
     public int Telefoonnummer {get; set;}
-    public string? Emailadres {get; set;}
     
 }
