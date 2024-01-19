@@ -6,15 +6,11 @@ body{
   margin: 0;
   padding: 0;
 }
+
 .BasePage{
   color: #000;
 }
-.logo{
-  position: absolute;
-  padding: 5px;
-  cursor: pointer;
-  left: 25px;
-  top: 0%;
+
 }
 
 .toolbar-start Button {
@@ -70,6 +66,8 @@ body{
 #menu li a:hover {
 	color: #FFFFFF;
 	background: #593AF2;
+  
+  
 }
 
 .registreer-container {
@@ -158,6 +156,7 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
 
 #menu input {
 	display: none;
