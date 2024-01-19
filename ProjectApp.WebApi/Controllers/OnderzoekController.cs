@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -93,7 +95,8 @@ namespace ProjectApp.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek onderzoek)
         {
-            if (onderzoek.Tijdslimiet > onderzoek.Onderzoeksdatum) {
+
+            if (onderzoek.Tijdslimiet < onderzoek.Onderzoeksdatum) {
                 return BadRequest("Tijdslimiet niet toegestaan");
             }
 

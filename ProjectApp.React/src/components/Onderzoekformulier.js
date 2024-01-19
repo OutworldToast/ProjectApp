@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../CSS/Light.css';
 
 const OnderzoekFormulier = () => {
 
   const navigate = useNavigate();
 
   const [gegevens, setGegevens] = useState({
-
     titel: '',
     beschrijving: '',
     onderzoeksdatum: '',
+    soortonderzoek: '',
+    beloning: '',
     tijdslimiet: '',
     hoeveelheiddeelnemers: '',
     beperkingid: '', 
-    bedrijfid: '0',
-
+    bedrijfid: '13',
   });
 
   const [beperkingen, setBeperkingen] = useState([]);
@@ -68,7 +69,7 @@ const OnderzoekFormulier = () => {
   const handleBeperkingChange = (e) => {
     setGegevens((prevGegevens) => ({
       ...prevGegevens,
-      BeperkingId: e.target.value,
+      beperkingid: e.target.value,
     }));
   };
 
@@ -82,6 +83,16 @@ const OnderzoekFormulier = () => {
       <label>
         Beschrijving:
         <input type="text" name="beschrijving" value={gegevens.beschrijving} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Soortonderzoek:
+        <input type="text" name="soortonderzoek" value={gegevens.soortonderzoek} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Beloning:
+        <input type="text" name="beloning" value={gegevens.beloning} onChange={handleChange} />
       </label>
       <br />
       <label>
@@ -102,10 +113,10 @@ const OnderzoekFormulier = () => {
       
       <label>
         Beperking:
-        <select name="Beperking" value={gegevens.beperkingid} onChange={handleBeperkingChange}>
+        <select name="beperkingId" value={gegevens.beperkingid} onChange={handleBeperkingChange}>
           <option value="">Selecteer een beperking</option>
-          {beperkingen.map((beperking, index) => (
-            <option key={index} value={beperking.Id}>
+          {beperkingen.map(beperking => (
+            <option key={beperking.id} value={beperking.id}>
               {beperking.categorie}
             </option>
           ))}

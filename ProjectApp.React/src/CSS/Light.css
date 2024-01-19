@@ -6,6 +6,12 @@ body{
   margin: 0;
   padding: 0;
 }
+
+label{
+  color: #000000;
+
+}
+
 .BasePage{
   color: #000;
 }

@@ -1,5 +1,4 @@
 
-import "../CSS/Light.css";
 
 import OnderzoekFormulier from "../components/Onderzoekformulier";
 
