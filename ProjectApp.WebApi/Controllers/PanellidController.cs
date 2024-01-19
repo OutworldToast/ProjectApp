@@ -11,6 +11,9 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
+    public class PanellidBeperking : Panellid {
+        public int BeperkingId {get; init;}
+    }
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -74,37 +77,88 @@ namespace ProjectApp.WebApi.Controllers
 
         // PUT: api/Panellid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPanellid(int id, [FromBody] Panellid panellid)
+        public async Task<IActionResult> PutPanellid(int id, [FromBody] PanellidBeperking panellid)
         {
             if (id != panellid.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(panellid).State = EntityState.Modified;
-
-            try
+            var gebruiker = await _context.Panelleden.FindAsync(id);
+            if (gebruiker != null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PanellidExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _context.Entry(gebruiker).State = EntityState.Modified;
 
-            return NoContent();
+                // Update de eigenschappen van panellid
+                if (!string.IsNullOrEmpty(panellid.Voornaam))
+                {
+                    gebruiker.Voornaam = panellid.Voornaam;
+                }
+
+                if (!string.IsNullOrEmpty(panellid.Achternaam))
+                {
+                    gebruiker.Achternaam = panellid.Achternaam;
+                }
+
+                if (!string.IsNullOrEmpty(panellid.Adres))
+                {
+                    gebruiker.Adres = panellid.Adres;
+                }
+
+                if (!string.IsNullOrEmpty(panellid.Postcode))
+                {
+                    gebruiker.Postcode = panellid.Postcode;
+                }
+
+                if (panellid.Telefoonnummer != 0)
+                {
+                    gebruiker.Telefoonnummer = panellid.Telefoonnummer;
+                }
+
+                // Update beperking (voorbeeld: beperkingId als een eigenschap van PanellidBeperking)
+                if (panellid.BeperkingId != 0)
+                {
+                    var beperking = await _context.Beperkingen.FindAsync(panellid.BeperkingId);
+                    if (beperking != null)
+                    {
+                        gebruiker.Beperkingen.Add(beperking);
+                    }
+                    else
+                    {
+                        return BadRequest("Ongeldige beperking.");
+                    }
+                }
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PanellidExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
+
 
         // POST: api/Panellid
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //moet deze wel bestaan?
         [HttpPost]
         public async Task<ActionResult<Panellid>> PostPanellid(Panellid panellid)
         {
@@ -113,6 +167,10 @@ namespace ProjectApp.WebApi.Controllers
 
             return CreatedAtAction("GetPanellid", new { id = panellid.Id }, panellid);
         }
+
+        // POST: api/Panellid
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //moet dit wel post zijn?
 
         // DELETE: api/Panellid/5
         // Add special authorisation?
