@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 function FetchData() {
   const [onderzoek, setOnderzoek] = useState([]);
-  const [gebruiker, setGebruiker] = useState([]);
   const [deelname, setDeelname] = useState({
     panellidid: '12',
     onderzoekid: '',
@@ -22,8 +21,6 @@ function FetchData() {
       ...prevDeelname,
       panellidid: data.id,
     }))
-    
-    setGebruiker(data);
   }
 
   useEffect(() => {

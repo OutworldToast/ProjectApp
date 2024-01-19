@@ -120,7 +120,7 @@ public class GebruikerController: ControllerBase {
                 var controller = new BedrijfController (_context);
                 return await controller.OnderzoekenVanGebruiker(id);
             } else {
-                return BadRequest(user.GetType());
+                return BadRequest("invalid user type");
             }
             
         } catch (Exception) {
