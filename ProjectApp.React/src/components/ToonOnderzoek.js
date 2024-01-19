@@ -4,7 +4,7 @@ function FetchData() {
   const [onderzoek, setOnderzoeken] = useState([]);
 
   useEffect(() => {
-    fetch('/api/Onderzoek/2')
+    fetch('/api/Onderzoek/')
       .then(response => response.json())
       .then(data => setOnderzoeken(data))
       .catch(err => console.log(err));

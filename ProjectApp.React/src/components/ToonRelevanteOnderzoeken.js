@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function FetchData() {
+function FetchData({Url}) {
   const [onderzoeken, setOnderzoeken] = useState([]);
 
   useEffect(() => {
-    fetch('api/Gebruiker/6/onderzoeken')
+    fetch('api/Gebruiker')
       .then(response => response.json())
       .then(data => setOnderzoeken(data))
       .catch(err => console.log(err));

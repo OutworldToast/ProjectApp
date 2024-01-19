@@ -10,10 +10,11 @@ using ProjectApp.WebApi.Models;
 
 
 //add regex for email??
-public class GebruikerMetWachtwoord {
+public class GebruikerRegister {
 
     public string? Wachtwoord {get; init;} //requires alphanumeric, number and uppercase
     public string? Emailadres {get; init;}
+    public string? Type {get; init;} //panellid, bedrijf
 }
 
 public class GebruikerLogin{
@@ -39,16 +40,27 @@ public class GebruikerController: ControllerBase {
     }
 
     [HttpPost("registreer")] //needs email confirmation
-    public async Task<ActionResult> Registreer([FromBody] GebruikerMetWachtwoord gebruikerDTO) {
-        if (gebruikerDTO.Wachtwoord == null || gebruikerDTO.Emailadres == null) {
+    public async Task<ActionResult> Registreer([FromBody] GebruikerRegister gebruikerDTO) {
+        if (gebruikerDTO.Wachtwoord == null || gebruikerDTO.Emailadres == null || gebruikerDTO.Type == null) {
             return BadRequest();
         }
 
-        Gebruiker gebruiker = new()
-        {
-            Email = gebruikerDTO.Emailadres,
-            UserName = gebruikerDTO.Emailadres
-        };
+        Gebruiker gebruiker;
+
+        if (String.Equals(gebruikerDTO.Type, "panellid", StringComparison.OrdinalIgnoreCase)) {
+            gebruiker = new Panellid(){
+                Email = gebruikerDTO.Emailadres,
+                UserName = gebruikerDTO.Emailadres
+            };
+        } else
+        if (String.Equals(gebruikerDTO.Type, "bedrijf", StringComparison.OrdinalIgnoreCase)) {
+            gebruiker = new Bedrijf(){
+                Email = gebruikerDTO.Emailadres,
+                UserName = gebruikerDTO.Emailadres
+            };
+        } else {
+            return BadRequest(gebruikerDTO.Type);
+        }
 
         // ->> sendemail async 
 
