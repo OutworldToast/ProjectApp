@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,49 +11,50 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ChatController : ControllerBase
+    public class DeelnameController : ControllerBase
     {
         private readonly OnderzoekContext _context;
 
-        public ChatController(OnderzoekContext context)
+        public DeelnameController(OnderzoekContext context)
         {
             _context = context;
         }
 
-        // GET: api/Chat
+        // GET: api/Deelname
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chat>>> GetChats()
+        public async Task<ActionResult<IEnumerable<Deelname>>> GetDeelnames()
         {
-            return await _context.Chats.ToListAsync();
+            return Ok(await _context.Deelnames.ToListAsync());
         }
 
-        // GET: api/Chat/5
+        // GET: api/Deelname/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chat>> GetChat(int id)
+        public async Task<ActionResult<Deelname>> GetDeelname(int id)
         {
-            var chat = await _context.Chats.FindAsync(id);
+            var Deelname = await _context.Deelnames.FindAsync(id);
 
-            if (chat == null)
+            if (Deelname == null)
             {
                 return NotFound();
             }
 
-            return chat;
+            return Ok(Deelname);
         }
 
-        // PUT: api/Chat/5
+        // PUT: api/Deelname/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(int id,[FromBody] Chat chat)
+        public async Task<IActionResult> PutDeelname(int id, [FromBody] Deelname Deelname)
         {
-            if (id != chat.Id)
+            if (id != Deelname.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(chat).State = EntityState.Modified;
+            _context.Entry(Deelname).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +62,7 @@ namespace ProjectApp.WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChatExists(id))
+                if (!DeelnameExists(id))
                 {
                     return NotFound();
                 }
@@ -73,46 +75,37 @@ namespace ProjectApp.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Chat
+        // POST: api/Deelname
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Chat>> PostChat([FromBody] Chat chat)
+        public async Task<ActionResult<Deelname>> PostDeelname([FromBody] Deelname Deelname)
         {
-            _context.Chats.Add(chat);
+            _context.Deelnames.Add(Deelname);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChat", new { id = chat.Id }, chat);
+            return CreatedAtAction("GetDeelname", new { id = Deelname.Id }, Deelname);
         }
 
-        // DELETE: api/Chat/5
+        // DELETE: api/Deelname/5
+        // Add special authorisation?
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChat(int id)
+        public async Task<IActionResult> DeleteDeelname(int id)
         {
-            var chat = await _context.Chats.FindAsync(id);
-            if (chat == null)
+            var Deelname = await _context.Deelnames.FindAsync(id);
+            if (Deelname == null)
             {
                 return NotFound();
             }
 
-            _context.Chats.Remove(chat);
+            _context.Deelnames.Remove(Deelname);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // GET api/Chat/id/berichten
-        [HttpGet("{id}/berichten")]
-        public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id) {
-            if (!ChatExists(id)) {
-                return NotFound();
-            } else {
-                return Ok(await _context.Berichten.Where(b => b.ChatId == id).ToListAsync());
-            }
-        }
-
-        private bool ChatExists(int id)
+        private bool DeelnameExists(int id)
         {
-            return _context.Chats.Any(e => e.Id == id);
+            return _context.Deelnames.Any(e => e.Id == id);
         }
     }
 }
