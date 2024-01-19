@@ -81,6 +81,16 @@ public class GebruikerController: ControllerBase {
 
     }
 
+    // GET: api/Gebruiker/current
+    [HttpGet("current")]
+    public async Task<ActionResult<Gebruiker>> GetCurrentGebruiker(){
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+
     // GET: api/Gebruiker/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Gebruiker>> GetGebruiker(int id)

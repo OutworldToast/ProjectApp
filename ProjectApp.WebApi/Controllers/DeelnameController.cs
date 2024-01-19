@@ -11,6 +11,11 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
+
+    public class DeelnamePost {
+        public int OnderzoekId {get; init;}
+        public int PanellidId {get; init;}
+    }
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -78,12 +83,34 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Deelname
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Deelname>> PostDeelname([FromBody] Deelname Deelname)
+        public async Task<ActionResult<Deelname>> PostDeelname([FromBody] DeelnamePost deelnamePost)
         {
-            _context.Deelnames.Add(Deelname);
+            var user = await _context.Panelleden.FindAsync(deelnamePost.PanellidId);
+            var onderzoek = await _context.Onderzoeken.FindAsync(deelnamePost.OnderzoekId);
+
+            if (user == null) {
+                return NotFound("Geen panellid met deze ID gevonden");
+            } else
+            if (onderzoek == null) {
+                return NotFound("Geen onderzoek met deze ID gevonden");
+            }
+
+            if (_context.Deelnames.Where(d => d.OnderzoekId == deelnamePost.OnderzoekId && d.PanellidId == deelnamePost.PanellidId).Any()) {
+                return BadRequest("Deelname bestaat al");
+            }
+
+            Deelname deelname = new() {
+                Onderzoek = onderzoek,
+                OnderzoekId = deelnamePost.OnderzoekId,
+                Panellid = user,
+                PanellidId = deelnamePost.PanellidId,
+                Status = "Actief",
+            };
+
+            _context.Deelnames.Add(deelname);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDeelname", new { id = Deelname.Id }, Deelname);
+            return CreatedAtAction("GetDeelname", new { id = deelname.Id }, deelname);
         }
 
         // DELETE: api/Deelname/5

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 function FetchData() {
-  const [onderzoek, setOnderzoeken] = useState([]);
+  const [onderzoek, setOnderzoek] = useState([]);
 
   useEffect(() => {
     fetch('/api/Onderzoek/2')
       .then(response => response.json())
-      .then(data => setOnderzoeken(data))
+      .then(data => setOnderzoek(data))
       .catch(err => console.log(err));
   }, []);
 
   return (
     <div>
-      <h1>Onderzoeken</h1>
+      <h1>Onderzoek</h1>
       <div>
             <strong>ID:</strong> {onderzoek.id}<br />
             <strong>Titel:</strong> {onderzoek.titel}<br />

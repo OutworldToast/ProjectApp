@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../CSS/Light.css';
 
 const OnderzoekFormulier = () => {
-
-  const navigate = useNavigate();
 
   const [gegevens, setGegevens] = useState({
     titel: '',
@@ -54,7 +51,6 @@ const OnderzoekFormulier = () => {
       console.error('Er is een fout opgetreden:', error.message);
     }
 
-    {/*navigate('/Homepage');*/}
 
   };
 
