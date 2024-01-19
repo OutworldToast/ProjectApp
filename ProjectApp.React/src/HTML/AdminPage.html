@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Beheerderspagina</title>
+  <link rel="stylesheet" href="AdminPage.css"> <!-- Zorg ervoor dat dit overeenkomt met je daadwerkelijke CSS-bestandsnaam -->
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="Logo.svg">Logo</a>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <h1>Beheerderspagina</h1>
+
+    <section class="gebruikers-beheer">
+      <h2>Gebruikersbeheer</h2>
+      <ul class="gebruiker-lijst">
+        <li>
+          <span>Gebruiker 1</span>
+          <button class="verwijder-gebruiker">Verwijderen</button>
+        </li>
+        <li>
+          <span>Gebruiker 2</span>
+          <button class="verwijder-gebruiker">Verwijderen</button>
+        </li>
+      </ul>
+    </section>
+
+    <section class="onderzoek-toevoegen">
+      <h2>Onderzoek Toevoegen</h2>
+      <form action="#" method="post">
+        <label for="onderzoek-titel">Onderzoekstitel:</label>
+        <input type="text" id="onderzoek-titel" name="onderzoek-titel" required>
+
+        <label for="onderzoek-beschrijving">Onderzoekbeschrijving:</label>
+        <textarea id="onderzoek-beschrijving" name="onderzoek-beschrijving" required></textarea>
+
+        <button type="submit">Toevoegen</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Mijn Beheerderspagina. Alle rechten voorbehouden.</p>
+  </footer>
+  <img src="logo.png"> <!-- Plaats de img tag binnen de body -->
+</body>
+
+</html>
