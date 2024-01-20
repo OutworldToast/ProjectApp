@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -44,6 +46,19 @@ namespace ProjectApp.WebApi.Controllers
             return Ok(Onderzoek);
         }
 
+        // GET: api/Onderzoek/Beperking?id=2
+        [HttpGet("Beperking")]
+        public async Task<ActionResult<Onderzoek>> GetOnderzoekByBeperking([FromQuery] int id)
+        {
+            var beperking = await _context.Beperkingen.FindAsync(id);
+            if (beperking == null) {
+                return NotFound("Geen beperking met deze ID gevonden");
+            }
+            var onderzoeken = await _context.Onderzoeken.Where(o => o.BeperkingId == id).ToListAsync();
+
+            return Ok(onderzoeken);
+        }
+
         // PUT: api/Onderzoek/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -78,12 +93,31 @@ namespace ProjectApp.WebApi.Controllers
         // POST: api/Onderzoek
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek Onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostOnderzoek([FromBody] Onderzoek onderzoek)
         {
-            _context.Onderzoeken.Add(Onderzoek);
+
+            if (onderzoek.Tijdslimiet < onderzoek.Onderzoeksdatum) {
+                return BadRequest("Tijdslimiet niet toegestaan");
+            }
+
+            var beperking = await _context.Beperkingen.FindAsync(onderzoek.BeperkingId);
+            if (beperking == null) {
+                return NotFound("Geen beperking met deze ID gevonden");
+            }
+            onderzoek.TypeBeperking = beperking;
+
+            var bedrijf = await _context.Bedrijven.FindAsync(onderzoek.BedrijfId);
+            if (beperking == null) {
+                return NotFound("Bedrijf bestaat niet");
+            }
+            onderzoek.Bedrijf = bedrijf;
+
+            onderzoek.Status = "Open";
+
+            _context.Onderzoeken.Add(onderzoek);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = Onderzoek.Id }, Onderzoek);
+            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
         }
 
         // DELETE: api/Onderzoek/5

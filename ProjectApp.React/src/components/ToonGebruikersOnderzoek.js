@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-function FetchData() {
+function FetchData({id = 1}) {
   const [onderzoeken, setOnderzoeken] = useState([]);
 
   useEffect(() => {
-    fetch('api/Gebruiker/')
+
+    fetch(`api/Gebruiker/${id}/deelnames`)
       .then(response => response.json())
       .then(data => setOnderzoeken(data))
       .catch(err => console.log(err));
-  }, []);
+  }, [id]);
 
   return (
     <div>

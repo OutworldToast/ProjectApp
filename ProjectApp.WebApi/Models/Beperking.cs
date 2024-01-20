@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ProjectApp.WebApi.Models;
 
 public class Beperking {
@@ -6,6 +8,7 @@ public class Beperking {
 
     //FKs
     public List<Panellid> Panelleden {get; set;} = [];
+    [JsonIgnore]
     public List<Onderzoek> Onderzoeken {get; set;} = [];
 
     //Body

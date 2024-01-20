@@ -7,6 +7,11 @@ body{
   padding: 0;
 }
 
+label{
+  color: #000000;
+
+}
+
 .BasePage{
   color: #000;
 }
@@ -120,6 +125,15 @@ body{
 }
 
 .profiel-formulier {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #7d7d7d;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ondezoek-formulier {
   max-width: 300px;
   margin: 0 auto;
   padding: 50px;

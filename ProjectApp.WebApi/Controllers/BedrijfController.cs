@@ -44,6 +44,20 @@ namespace ProjectApp.WebApi.Controllers
             return Ok(Bedrijf);
         }
 
+        //GET api/Bedrijf/{id}/onderzoeken
+        [HttpGet("{id}/deelnames")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
+
+            try {
+                
+                var user = await _context.Bedrijven.SingleAsync(g => g.Id == id);
+                return Ok(await _context.Onderzoeken.Where(o => o.BedrijfId == user.Id).ToListAsync());
+                
+            } catch (Exception) {
+                return NotFound();
+            }
+        }
+
         // PUT: api/Bedrijf/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -47,9 +47,23 @@ namespace ProjectApp.WebApi.Controllers
             return Ok(panellid);
         }
 
+        // GET: api/Panellid/Beperking?id=5
+        [HttpGet("Beperking")]
+        public async Task<ActionResult<Panellid>> GetPanelledenByBeperking([FromQuery] int id)
+        {
+            var beperking = await _context.Beperkingen.FindAsync(id);
+            if (beperking == null) {
+                return NotFound("Geen beperking met deze ID gevonden");
+            }
+
+            var panelleden = await _context.Panelleden.Where(p => p.Beperkingen.Contains(beperking)).ToListAsync();
+
+            return Ok(panelleden);
+        }
+
         // GET: api/Panellid/5/deelnames
         [HttpGet("{id}/deelnames")]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanPanellid(int id) {
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> OnderzoekenVanGebruiker(int id) {
 
             try {
             
@@ -63,7 +77,6 @@ namespace ProjectApp.WebApi.Controllers
 
         // PUT: api/Panellid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-// ...
 
 [HttpPut("{id}")]
 public async Task<IActionResult> PutPanellid(int id, [FromBody] PanellidBeperking panellid)
@@ -141,11 +154,6 @@ public async Task<IActionResult> PutPanellid(int id, [FromBody] PanellidBeperkin
         return NotFound();
     }
 }
-
-
-
-// ...
-
 
         // POST: api/Panellid
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
