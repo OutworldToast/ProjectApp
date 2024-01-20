@@ -4,6 +4,7 @@ function FetchData({id = 1}) {
   const [onderzoeken, setOnderzoeken] = useState([]);
 
   useEffect(() => {
+
     fetch(`api/Gebruiker/${id}/deelnames`)
       .then(response => response.json())
       .then(data => setOnderzoeken(data))

@@ -78,83 +78,82 @@ namespace ProjectApp.WebApi.Controllers
         // PUT: api/Panellid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPanellid(int id, [FromBody] PanellidBeperking panellid)
+[HttpPut("{id}")]
+public async Task<IActionResult> PutPanellid(int id, [FromBody] PanellidBeperking panellid)
+{
+    if (id != panellid.Id)
+    {
+        return BadRequest();
+    }
+
+    var gebruiker = await _context.Panelleden.FindAsync(id);
+    if (gebruiker != null)
+    {
+        _context.Entry(gebruiker).State = EntityState.Modified;
+
+        // Update de eigenschappen van panellid
+        if (!string.IsNullOrEmpty(panellid.Voornaam))
         {
-            if (id != panellid.Id)
+            gebruiker.Voornaam = panellid.Voornaam;
+        }
+
+        if (!string.IsNullOrEmpty(panellid.Achternaam))
+        {
+            gebruiker.Achternaam = panellid.Achternaam;
+        }
+
+        if (!string.IsNullOrEmpty(panellid.Adres))
+        {
+            gebruiker.Adres = panellid.Adres;
+        }
+
+        if (!string.IsNullOrEmpty(panellid.Postcode))
+        {
+            gebruiker.Postcode = panellid.Postcode;
+        }
+
+        if (panellid.Telefoonnummer != 0)
+        {
+            gebruiker.Telefoonnummer = panellid.Telefoonnummer;
+        }
+
+        // Update beperking (voorbeeld: beperkingId als een eigenschap van PanellidBeperking)
+        if (panellid.BeperkingId != 0)
+        {
+            var beperking = await _context.Beperkingen.FindAsync(panellid.BeperkingId);
+            if (beperking != null)
             {
-                return BadRequest();
-            }
-
-            var gebruiker = await _context.Panelleden.FindAsync(id);
-            if (gebruiker != null)
-            {
-                _context.Entry(gebruiker).State = EntityState.Modified;
-
-                // Update de eigenschappen van panellid
-                if (!string.IsNullOrEmpty(panellid.Voornaam))
-                {
-                    gebruiker.Voornaam = panellid.Voornaam;
-                }
-
-                if (!string.IsNullOrEmpty(panellid.Achternaam))
-                {
-                    gebruiker.Achternaam = panellid.Achternaam;
-                }
-
-                if (!string.IsNullOrEmpty(panellid.Adres))
-                {
-                    gebruiker.Adres = panellid.Adres;
-                }
-
-                if (!string.IsNullOrEmpty(panellid.Postcode))
-                {
-                    gebruiker.Postcode = panellid.Postcode;
-                }
-
-                if (panellid.Telefoonnummer != 0)
-                {
-                    gebruiker.Telefoonnummer = panellid.Telefoonnummer;
-                }
-
-                // Update beperking (voorbeeld: beperkingId als een eigenschap van PanellidBeperking)
-                if (panellid.BeperkingId != 0)
-                {
-                    var beperking = await _context.Beperkingen.FindAsync(panellid.BeperkingId);
-                    if (beperking != null)
-                    {
-                        gebruiker.Beperkingen.Add(beperking);
-                    }
-                    else
-                    {
-                        return BadRequest("Ongeldige beperking.");
-                    }
-                }
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PanellidExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return NoContent();
+                gebruiker.Beperkingen.Add(beperking);
             }
             else
             {
-                return NotFound();
+                return BadRequest("Ongeldige beperking.");
             }
         }
 
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!PanellidExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
+    }
+    else
+    {
+        return NotFound();
+    }
+}
 
         // POST: api/Panellid
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
