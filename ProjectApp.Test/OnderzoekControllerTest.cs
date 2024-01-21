@@ -57,7 +57,6 @@ public class OnderzoekControllerTest : IDisposable
             new Bedrijf {
                 Id = 1,
                 Naam = "Bedrijf",
-                Email = ""
             }
         );
 
@@ -111,18 +110,18 @@ public class OnderzoekControllerTest : IDisposable
 
     [Fact]
     public async void GetOnderzoekExistsTest() {
-    //arrange
-    OnderzoekController controller = new(_context);
+        //arrange
+        OnderzoekController controller = new(_context);
 
-    //act
-    var result = await controller.GetOnderzoek(1);
-    //->> fixture
+        //act
+        var result = await controller.GetOnderzoek(1);
+        //->> fixture
 
-    //assert
-    var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
-    var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-    var onderzoek = Assert.IsType<Onderzoek>(okObjectResult.Value);
-    Assert.Equal(5, onderzoek.Beloning);
+        //assert
+        var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
+        var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+        var onderzoek = Assert.IsType<Onderzoek>(okObjectResult.Value);
+        Assert.Equal(5, onderzoek.Beloning);
     }
 
     [Fact]
@@ -132,7 +131,6 @@ public class OnderzoekControllerTest : IDisposable
 
         //act
         var result = await controller.GetOnderzoek(20);
-        //->> fixture
 
         //assert
         var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
@@ -143,7 +141,6 @@ public class OnderzoekControllerTest : IDisposable
     public async void GetOnderzoekenByBeperkingExistsTest() {
         //arrange
         OnderzoekController controller = new(_context);
-        //->> fixture
 
         //act
         var result = await controller.GetOnderzoekenByBeperking(1);
@@ -159,7 +156,6 @@ public class OnderzoekControllerTest : IDisposable
     public async void GetOnderzoekenByBeperkingNotExistsTest() {
         //arrange
         OnderzoekController controller = new(_context);
-        //->> fixture
 
         //act
         var result = await controller.GetOnderzoekenByBeperking(2);
@@ -168,6 +164,8 @@ public class OnderzoekControllerTest : IDisposable
         var actionResult = Assert.IsType<ActionResult<IEnumerable<Onderzoek>>>(result);
         Assert.IsType<NotFoundObjectResult>(actionResult.Result);
     }
+
+    //tests for unimplemented put method here
 
     [Fact]
     public async void PostOnderzoekInvalidTimelimitTest ()
@@ -186,19 +184,6 @@ public class OnderzoekControllerTest : IDisposable
         var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
         Assert.IsType<BadRequestObjectResult>(actionResult.Result);
 
-
-        // var bedrijf = await _context.Bedrijven.FindAsync(onderzoek.BedrijfId);
-        // if (beperking == null) {
-        //     return NotFound("Bedrijf bestaat niet");
-        // }
-        // onderzoek.Bedrijf = bedrijf;
-
-        // onderzoek.Status = "Open";
-
-        // _context.Onderzoeken.Add(onderzoek);
-        // await _context.SaveChangesAsync();
-
-        // return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
     }
 
     [Fact]
@@ -216,6 +201,71 @@ public class OnderzoekControllerTest : IDisposable
         //assert
         var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
         Assert.IsType<NotFoundObjectResult>(actionResult.Result);
+    }
+
+    [Fact]
+    public async void PostOnderzoekInvalidBedrijfTest () {
+        //arrange
+        OnderzoekController controller = new(_context);
+        Onderzoek o = _fixture.Build<Onderzoek>()
+            .With(o => o.Onderzoeksdatum, DateTime.Now.Date)
+            .With(o => o.Tijdslimiet, DateTime.Now.AddDays(7).Date)
+            .With(o => o.BeperkingId, 1)
+            .With(o => o.BedrijfId, 2)
+            .Create();
+        
+        //act
+        var result = await controller.PostOnderzoek(o);
+
+        //assert
+        var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
+        Assert.IsType<NotFoundObjectResult>(actionResult.Result);
+    }
+
+    [Fact]
+    public async void PostOnderzoekValidTest () {
+        //arrange
+        OnderzoekController controller = new(_context);
+        Onderzoek o = _fixture.Build<Onderzoek>()
+            .With(o => o.Onderzoeksdatum, DateTime.Now.Date)
+            .With(o => o.Tijdslimiet, DateTime.Now.AddDays(7).Date)
+            .With(o => o.BeperkingId, 1)
+            .With(o => o.BedrijfId, 1)
+            .Create();
+        
+        //act
+        var result = await controller.PostOnderzoek(o);
+
+        //assert
+        var actionResult = Assert.IsType<ActionResult<Onderzoek>>(result);
+        var createdAtAction = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
+        var onderzoek = Assert.IsType<Onderzoek>(createdAtAction.Value);
+        Assert.Equal("Open", onderzoek.Status);
+    }
+
+    [Fact]
+    public async void DeleteOnderzoekExistsTest() {
+        //arrange
+        OnderzoekController controller = new(_context);
+
+        //act
+        var result = await controller.DeleteOnderzoek(1);
+
+        //assert
+        Assert.IsType<NoContentResult>(result);
+        Assert.False(_context.Onderzoeken.Any(o => o.Id == 1));
+    }
+
+    [Fact]
+    public async void DeleteOnderzoekNotExistsTest() {
+        //arrange
+        OnderzoekController controller = new(_context);
+
+        //act
+        var result = await controller.DeleteOnderzoek(20);
+
+        //assert
+        Assert.IsType<NotFoundResult>(result);
     }
 
     //Gooit na elke test het database weg
