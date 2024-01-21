@@ -40,7 +40,7 @@ namespace ProjectApp.WebApi.Controllers
 
             if (Onderzoek == null)
             {
-                return NotFound();
+                return NotFound("Geen onderzoek met deze ID gevonden");
             }
 
             return Ok(Onderzoek);
@@ -48,7 +48,7 @@ namespace ProjectApp.WebApi.Controllers
 
         // GET: api/Onderzoek/Beperking?id=2
         [HttpGet("Beperking")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoekenByBeperking([FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoekenByBeperking([FromQuery] int id)
         {
             var beperking = await _context.Beperkingen.FindAsync(id);
             if (beperking == null) {

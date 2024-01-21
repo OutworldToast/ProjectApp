@@ -104,18 +104,18 @@ public class GebruikerController: ControllerBase {
     }
 
     // GET: api/Gebruiker/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Gebruiker>> GetGebruiker(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Gebruiker>> GetGebruiker(int id)
+    {
+        var gebruiker = await _context.Gebruikers.FindAsync(id);
+
+        if (gebruiker == null)
         {
-            var gebruiker = await _context.Gebruikers.FindAsync(id);
-
-            if (gebruiker == null)
-            {
-                return NotFound();
-            }
-
-            return gebruiker;
+            return NotFound();
         }
+
+        return gebruiker;
+    }
 
     //GET api/Gebruiker/{id}/deelnames
     [HttpGet("{id}/deelnames")]
@@ -157,13 +157,16 @@ public class GebruikerController: ControllerBase {
     //GET api/Gebruiker/{id}/chats
     [HttpGet("{id}/chats")]
     //returnt chat zonder alle berichten
-    public async Task<ActionResult<IEnumerable<ChatHeader>>> Chats(int id) {
+    public async Task<ActionResult<IEnumerable<ChatHeader>>> GetChats(int id) {
 
          try {
-            var user = await _context.Panelleden.SingleAsync(g => g.Id == id);
+            var user = await _context.Panelleden.FindAsync(id);
+            if (user == null) {
+                return NotFound("Geen Gebruiker met deze ID gevonden");
+            } 
             return Ok(await _context.Chats.Where(c => c.Gebruiker1.Id == id || c.Gebruiker2.Id == id).Select(c => c.ChatHeader()).ToListAsync());
         } catch (Exception) {
-            return NotFound();
+            return BadRequest("Er is iets misgegaan");
         }
 
     }

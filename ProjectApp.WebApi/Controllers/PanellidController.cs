@@ -11,13 +11,14 @@ using ProjectApp.WebApi.Models;
 
 namespace ProjectApp.WebApi.Controllers
 {
-    public class PanellidBeperking : Panellid {
+    public class PanellidBeperking : Panellid { //slechte dependency? 
         public int BeperkingId {get; init;}
     }
+
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PanellidController : ControllerBase
+    public class PanellidController : ControllerBase //should inherit Gebruikercontroller?
     {
         private readonly OnderzoekContext _context;
 
