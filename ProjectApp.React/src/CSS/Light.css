@@ -32,6 +32,13 @@ label{
   left: 20px;
 }
 
+.logo{
+  width: 175px;
+  position: absolute;
+  right: 85%;
+  top: 4%;
+}
+
 #menu {
   background: #ffffff;
   height: 45px;
@@ -39,7 +46,7 @@ label{
   border: 1px solid #6D6D6D;
   position: absolute;
   top: 8%;
-  left: 29%;
+  left: 20%;
 }
 
 #menu ul, #menu li {

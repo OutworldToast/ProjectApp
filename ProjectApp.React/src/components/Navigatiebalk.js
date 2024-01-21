@@ -1,14 +1,18 @@
 function Navigatiebalk() {
 
     return (
-        <div class = "navbar">
+        <div className = "navbar">
 
-        <nav>
-            <a href="HomePage">Home</a> |
-            <a href="ChatPage">Chat</a> |
-            <a href="LoginPage">Uitloggen</a> |
-            <a href="Profiel">Profiel</a> |
-            <a href="Over ons">Over ons</a>
+        <nav id='menu'>
+        <ul>
+          <li><a href='HomePage'>Home</a></li>
+          <li><a href='ChatPage'>Chat</a></li>
+          <li><a href='ProfielPage'>Profiel</a></li>
+          <li><a href='OnderzoekPage'>Onderzoek</a></li>
+          <li><a href='LoginPage'>Uitloggen</a></li>
+          <li><a href='MaakOnderzoekPage'>Maak Onderzoek</a></li>
+          <li><a href='AdminPage'>Admin</a></li>
+        </ul>
         </nav>
             
         </div>
