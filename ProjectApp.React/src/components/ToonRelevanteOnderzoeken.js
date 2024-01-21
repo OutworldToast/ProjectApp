@@ -12,6 +12,7 @@ function FetchData({Url}) {
 
   return (
     <div>
+      {onderzoeken.length > 0 ? (
       <ul>
         {onderzoeken.map((onderzoek, index) => (
           <li key={index}>
@@ -27,6 +28,9 @@ function FetchData({Url}) {
           </li>
         ))}
       </ul>
+      ) : (
+        <h3>Geen onderzoeken gevonden</h3>
+      )}
     </div>
   );
 }
