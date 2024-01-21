@@ -19,16 +19,20 @@ builder.Services.AddAuthentication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// SHOULD NOT BE IN HERE IN PRODUCTION
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
+
+
+var FrontendOrigin = "allowFrontendOrigin";
+
+builder.Services.AddCors(options => {
+    options.AddPolicy(
+        name: FrontendOrigin,
         policy =>
         {
-            policy.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-        });
+            policy.WithOrigins("http://localhost:5224")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        }
+    );
 });
 
 var app = builder.Build();
@@ -41,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(FrontendOrigin);
 
 app.UseAuthentication();
 app.UseAuthorization();

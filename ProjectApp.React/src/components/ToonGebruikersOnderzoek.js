@@ -13,6 +13,7 @@ function FetchData({id = 1}) {
 
   return (
     <div>
+      {onderzoeken.length > 0 ? (
       <ul>
         {onderzoeken.map((onderzoek, index) => (
           <li key={index}>
@@ -25,11 +26,12 @@ function FetchData({id = 1}) {
             <strong>Hoeveelheid deelnemers:</strong> {onderzoek.hoeveelheidDeelnemers}<br />
             <strong>Beloning:</strong> {onderzoek.beloning}<br />
             <strong>Status:</strong> {onderzoek.status}<br />
-            
-            {/* Voeg andere eigenschappen toe zoals gewenst */}
           </li>
         ))}
       </ul>
+      ) : (
+        <h3>Geen onderzoeken gevonden</h3>
+      )}
     </div>
   );
 }
