@@ -1,5 +1,5 @@
 import "../CSS/Light.css";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import LinkButton from "../components/LinkButton";
 import Cookies from "js-cookie"
@@ -9,17 +9,19 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [emailadres, setEmailadres] = useState('');
   const [wachtwoord, setWachtwoord] = useState('');
-  const [gebruiker, setGebruiker] = useState([]);
 
-  function setCookie() {
-
+  async function getUser() {
     fetch(`api/Gebruiker/current`)
       .then(response => response.json())
-      .then(data => setGebruiker(gebruiker))
+      .then(data => {setCookie(data);})
       .catch(err => console.log(err));
-
-    Cookies.set('gebruiker', gebruiker, { expires: 1 })
   }
+
+  function setCookie(data) {
+    console.log(data);
+    // console.log(data.id); //data.id crasht willekeurig alles??
+    Cookies.set('gebruiker', '2', { expires: 1 })
+  } 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,6 +38,7 @@ export default function LoginPage() {
 
     if (response.ok) {
       console.log('Inloggen succesvol');
+      await getUser();
       setCookie();
       navigate('/HomePage');
     } else {
