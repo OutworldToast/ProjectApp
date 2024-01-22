@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function FetchData({id = 1}) {
+function FetchData({id = 10}) {
   const [onderzoeken, setOnderzoeken] = useState([]);
 
   useEffect(() => {

@@ -4,11 +4,12 @@ function FetchData() {
   const [onderzoek, setOnderzoek] = useState([]);
 
   useEffect(() => {
-    fetch('/api/Onderzoek/')
+    fetch('/api/Onderzoek/10')
       .then(response => response.json())
       .then(data => setOnderzoek(data))
       .catch(err => console.log(err));
   }, []);
+
 
   return (
     <div>
@@ -21,9 +22,12 @@ function FetchData() {
             <strong>Tijdslimiet:</strong> {onderzoek.tijdslimiet}<br />
             <strong>Soortonderzoek:</strong> {onderzoek.soortOnderzoek}<br />
             <strong>Hoeveelheid deelnemers:</strong> {onderzoek.hoeveelheidDeelnemers}<br />
-            <strong>Beloning:</strong> {onderzoek.beloning} <strong>'€'</strong><br />
+            <strong>Beloning:</strong> {onderzoek.beloning} <strong>€</strong><br />
             <strong>Status:</strong> {onderzoek.status}<br />
       </div>
+      <button>
+      <li><a href='OnderzoekPage'>Onderzoek</a></li>
+      </button>
     </div>
   );
 }
