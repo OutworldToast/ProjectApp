@@ -21,7 +21,7 @@ function FetchData() {
             <strong>Tijdslimiet:</strong> {onderzoek.tijdslimiet}<br />
             <strong>Soortonderzoek:</strong> {onderzoek.soortOnderzoek}<br />
             <strong>Hoeveelheid deelnemers:</strong> {onderzoek.hoeveelheidDeelnemers}<br />
-            <strong>Beloning:</strong> {onderzoek.beloning}<br />
+            <strong>Beloning:</strong> {onderzoek.beloning} <strong>'€'</strong><br />
             <strong>Status:</strong> {onderzoek.status}<br />
       </div>
     </div>
