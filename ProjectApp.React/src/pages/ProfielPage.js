@@ -7,14 +7,14 @@ const ProfielFormulier = () => {
     adres: '',
     postcode: '',
     telefoonnummer: '',
-    beperkingId: '', // nieuwe staat voor beperking
-    id: '12',
+    beperkingId: '',
+    id: '16',
   });
 
   const [beperkingen, setBeperkingen] = useState([]);
+  const [wijzigingStatus, setWijzigingStatus] = useState(null); // Toegevoegde staat voor wijzigingsstatus
 
   useEffect(() => {
-    // Haal de lijst met beperkingen op wanneer het component mount
     fetch('api/Beperking')
       .then(response => response.json())
       .then(data => setBeperkingen(data))
@@ -29,7 +29,7 @@ const ProfielFormulier = () => {
     );
 
     try {
-      const response = await fetch('api/Panellid/12', {
+      const response = await fetch('api/Panellid/16', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -39,12 +39,15 @@ const ProfielFormulier = () => {
 
       if (response.ok) {
         console.log('Profiel succesvol gewijzigd');
+        setWijzigingStatus('success'); // Set wijzigingsstatus op 'success' bij succes
       } else {
         const fouten = await response.json();
         console.error('Fout bij het wijzigen van het profiel:', fouten);
+        setWijzigingStatus('failure'); // Set wijzigingsstatus op 'failure' bij mislukking
       }
     } catch (error) {
       console.error('Er is een fout opgetreden:', error.message);
+      setWijzigingStatus('failure'); // Set wijzigingsstatus op 'failure' bij mislukking
     }
   };
 
@@ -58,6 +61,9 @@ const ProfielFormulier = () => {
 
   return (
     <form onSubmit={handleSubmit} className="profiel-formulier">
+      {wijzigingStatus === 'success' && <div style={{ color: 'green' }}>Profiel succesvol gewijzigd!</div>}
+      {wijzigingStatus === 'failure' && <div style={{ color: 'red' }}>Fout bij het wijzigen van het profiel. Probeer opnieuw.</div>}
+      
       <label>
         Voornaam:
       <input type="text" name="voornaam" value={gegevens.voornaam} onChange={handleChange}/>
@@ -101,3 +107,5 @@ const ProfielFormulier = () => {
 };
 
 export default ProfielFormulier;
+
+
