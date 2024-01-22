@@ -3,7 +3,9 @@ import React from "react";
 import logo from "../Resources/sia/sta.png";
 import ToonGebruikerOnderzoeken from "../components/ToonGebruikersOnderzoek";
 // import ToonRelevanteOnderzoeken from "../components/ToonRelevanteOnderzoeken";
-import ToonRelevanteOnderzoeken from "../components/ToonRelevanteOnderzoeken";
+// import ToonRelevanteOnderzoeken from "../components/ToonRelevanteOnderzoeken";
+import ToonOnderzoeken from "../components/ToonOnderzoek";
+
 import "../CSS/Light.css";
 
 export default function HomePage() {
@@ -26,12 +28,12 @@ export default function HomePage() {
         
         <section id="section1">
             <h2>Mijn Onderzoeken</h2>
-            <ToonGebruikerOnderzoeken id = {'12'}/>
+            <ToonGebruikerOnderzoeken id = {'19'}/>
         </section>
     
         <section id="section2">
             <h2>Nieuwe Onderzoeken</h2>
-            <ToonRelevanteOnderzoeken />
+            <ToonOnderzoeken />
         </section>
     
         </div>

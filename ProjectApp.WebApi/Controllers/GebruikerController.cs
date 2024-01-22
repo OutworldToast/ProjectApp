@@ -68,6 +68,12 @@ public class GebruikerController: ControllerBase {
         return !resultaat.Succeeded ? BadRequest(resultaat) : Created();
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Gebruiker>>> GetGebruikers()
+    {
+        return Ok(await _context.Gebruikers.ToListAsync());
+    }
+
     [HttpPost("login")] //should use JWT?
     public async Task<ActionResult> Login([FromBody] GebruikerLogin gebruiker){ //identityoptions.requireemailunique ofzo
         if (gebruiker.Emailadres == null || gebruiker.Wachtwoord == null) {
