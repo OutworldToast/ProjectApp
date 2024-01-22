@@ -2,7 +2,11 @@
   "name": "reactapp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://localhost:5224/",
+  "options" : {
+    "proxy": "https://localhost:5224/",
+    "allowedhosts": "*"
+  },
+  
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

@@ -14,7 +14,7 @@ const RegisterForm = () => {
       type: gebruikerType, // Voeg het geselecteerde gebruikerstype toe
     };
 
-    const response = await fetch('api/Gebruiker/registreer', {
+    const response = await fetch('https://localhost:5224/api/Gebruiker/registreer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
