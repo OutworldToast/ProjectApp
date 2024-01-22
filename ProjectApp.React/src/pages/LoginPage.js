@@ -2,12 +2,24 @@ import "../CSS/Light.css";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import LinkButton from "../components/LinkButton";
+import Cookies from "js-cookie"
 
 // LoginPage-component
 export default function LoginPage() {
   const navigate = useNavigate();
   const [emailadres, setEmailadres] = useState('');
   const [wachtwoord, setWachtwoord] = useState('');
+  const [gebruiker, setGebruiker] = useState([]);
+
+  function setCookie() {
+
+    fetch(`api/Gebruiker/current`)
+      .then(response => response.json())
+      .then(data => setGebruiker(gebruiker))
+      .catch(err => console.log(err));
+
+    Cookies.set('gebruiker', gebruiker, { expires: 1 })
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +36,7 @@ export default function LoginPage() {
 
     if (response.ok) {
       console.log('Inloggen succesvol');
+      setCookie();
       navigate('/HomePage');
     } else {
       console.error('Inloggen mislukt');
