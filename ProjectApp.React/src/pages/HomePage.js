@@ -9,9 +9,6 @@ import "../CSS/Light.css";
 export default function HomePage() {
     return (
         <div className="BasePage">
-              <header>
-            <h1>Stichting Accessibility</h1>
-        </header>
       
         <img src={logo} alt="Stichting Accessibility" className='logo'/>
       
@@ -23,6 +20,7 @@ export default function HomePage() {
           <li><a href='OnderzoekPage'>Onderzoek</a></li>
           <li><a href='LoginPage'>Uitloggen</a></li>
           <li><a href='MaakOnderzoekPage'>Maak Onderzoek</a></li>
+          <li><a href='AdminPage'>Admin</a></li>
         </ul>
       </nav>
         
