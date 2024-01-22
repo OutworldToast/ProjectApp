@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'
 
 const ProfielFormulier = () => {
   const [gegevens, setGegevens] = useState({
@@ -7,8 +8,8 @@ const ProfielFormulier = () => {
     adres: '',
     postcode: '',
     telefoonnummer: '',
-    beperkingId: '',
-    id: '16',
+    beperkingId: '', // nieuwe staat voor beperking
+    id: `${Cookies.get('gebruiker')}`,
   });
 
   const [beperkingen, setBeperkingen] = useState([]);
@@ -29,7 +30,8 @@ const ProfielFormulier = () => {
     );
 
     try {
-      const response = await fetch('api/Panellid/16', {
+
+      const response = await fetch(`api/Panellid/${Cookies.get('gebruiker')}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

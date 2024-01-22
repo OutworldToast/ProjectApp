@@ -14,7 +14,7 @@ namespace ProjectApp.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class BedrijfController : ControllerBase
+    public class BedrijfController : ControllerBase //should inherit Gebruikercontroller?
     {
         private readonly OnderzoekContext _context;
 

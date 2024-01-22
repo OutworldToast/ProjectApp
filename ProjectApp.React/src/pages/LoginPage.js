@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import LinkButton from '../components/LinkButton';
+import "../CSS/Light.css";
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import LinkButton from "../components/LinkButton";
+import Cookies from "js-cookie";
 
 // LoginPage-component
 export default function LoginPage() {
@@ -8,6 +10,19 @@ export default function LoginPage() {
   const [emailadres, setEmailadres] = useState('');
   const [wachtwoord, setWachtwoord] = useState('');
   const [loginStatus, setLoginStatus] = useState(null); // Toegevoegde staat voor loginstatus
+
+  async function getUser() {
+    fetch(`api/Gebruiker/current`)
+      .then(response => response.json())
+      .then(data => {setCookie(data);})
+      .catch(err => console.log(err));
+  }
+
+  function setCookie(data) {
+    console.log(data);
+    // console.log(data.id); //data.id crasht willekeurig alles??
+    Cookies.set('gebruiker', '2', { expires: 1 })
+  } 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +39,8 @@ export default function LoginPage() {
 
     if (response.ok) {
       console.log('Inloggen succesvol');
+      await getUser();
+      setCookie();
       setLoginStatus('success'); // Set loginstatus op 'success' bij succes
       navigate('/HomePage');
     } else {
